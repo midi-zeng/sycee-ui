@@ -1,0 +1,65 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Progress
+// ---------------------------------------------------------------------------
+
+.sy-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--sy-space-2);
+  width: 100%;
+  font-family: var(--sy-font-family);
+  color: var(--sy-color-primary);
+
+  &__track {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    background-color: var(--sy-color-bg-tertiary);
+    border-radius: var(--sy-radius-full);
+  }
+
+  &__bar {
+    height: 100%;
+    min-width: 0;
+    background-color: currentColor;
+    border-radius: var(--sy-radius-full);
+    transition: width var(--sy-duration-slow) var(--sy-ease);
+  }
+
+  &__text {
+    min-width: 36px;
+    font-size: var(--sy-font-size-xs);
+    color: var(--sy-color-text-tertiary);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &--success {
+    color: var(--sy-color-success);
+  }
+
+  &--warning {
+    color: var(--sy-color-warning);
+  }
+
+  &--danger {
+    color: var(--sy-color-danger);
+  }
+
+  &--indeterminate .sy-progress__bar {
+    width: 40% !important;
+    animation: sy-progress-indeterminate 1.4s var(--sy-ease) infinite;
+  }
+}
+
+@keyframes sy-progress-indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(250%);
+  }
+}

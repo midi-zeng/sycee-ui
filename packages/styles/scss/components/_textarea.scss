@@ -1,0 +1,83 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Textarea
+// ---------------------------------------------------------------------------
+
+.sy-textarea-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--sy-space-1);
+}
+
+.sy-textarea {
+  @include m.sy-field-base;
+  @include m.sy-focus-ring;
+
+  align-items: stretch;
+  flex-direction: column;
+  padding: var(--sy-space-2) var(--sy-space-3);
+  cursor: text;
+
+  &__native {
+    width: 100%;
+    min-height: 100%;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    line-height: var(--sy-line-height);
+    resize: vertical;
+
+    &::placeholder {
+      color: var(--sy-color-text-tertiary);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &--sm {
+    font-size: var(--sy-font-size-sm);
+  }
+
+  &--error {
+    border-color: var(--sy-color-danger);
+
+    &:hover:not(.is-disabled) {
+      border-color: var(--sy-color-danger-hover);
+    }
+
+    &:focus-within:not(.is-disabled) {
+      border-color: var(--sy-color-danger);
+      box-shadow: var(--sy-focus-ring-danger);
+    }
+  }
+
+  &--warning {
+    border-color: var(--sy-color-warning);
+
+    &:hover:not(.is-disabled) {
+      border-color: var(--sy-color-warning-hover);
+    }
+
+    &:focus-within:not(.is-disabled) {
+      border-color: var(--sy-color-warning);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--sy-color-warning) 26%, transparent);
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    background-color: var(--sy-color-bg-tertiary);
+    border-color: transparent;
+    color: var(--sy-color-text-disabled);
+  }
+}
+
+.sy-textarea__count {
+  align-self: flex-end;
+  font-size: var(--sy-font-size-xs);
+  color: var(--sy-color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}

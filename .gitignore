@@ -1,0 +1,26 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+coverage
+
+# Docs build
+docs/.vitepress/dist
+docs/.vitepress/cache
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor & OS
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.tsbuildinfo
+
+# Env
+.env
+.env.local

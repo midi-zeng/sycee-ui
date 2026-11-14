@@ -1,0 +1,76 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Tabs
+// ---------------------------------------------------------------------------
+
+.sy-tabs {
+  font-family: var(--sy-font-family);
+
+  &__nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--sy-color-border);
+  }
+
+  &__tab {
+    @include m.sy-control-base;
+    @include m.sy-focus-ring;
+
+    height: 40px;
+    padding: 0 var(--sy-space-4);
+    font-size: var(--sy-font-size-md);
+    color: var(--sy-color-text-secondary);
+    border-radius: var(--sy-radius-sm) var(--sy-radius-sm) 0 0;
+
+    &:hover:not(.is-disabled) {
+      color: var(--sy-color-text);
+    }
+
+    &.is-active {
+      color: var(--sy-color-primary);
+      font-weight: var(--sy-font-weight-medium);
+    }
+
+    &.is-disabled {
+      color: var(--sy-color-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  &__indicator {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background-color: var(--sy-color-primary);
+    border-radius: var(--sy-radius-full);
+    transition:
+      transform var(--sy-duration-base) var(--sy-ease),
+      width var(--sy-duration-base) var(--sy-ease);
+  }
+
+  &__pane {
+    padding: var(--sy-space-4) 0;
+    font-size: var(--sy-font-size-md);
+    color: var(--sy-color-text-secondary);
+    line-height: var(--sy-line-height);
+
+    &:not(.is-active) {
+      display: none;
+    }
+  }
+
+  &--sm .sy-tabs__tab {
+    height: 34px;
+    padding: 0 var(--sy-space-3);
+    font-size: var(--sy-font-size-sm);
+  }
+
+  &--lg .sy-tabs__tab {
+    height: 46px;
+    padding: 0 var(--sy-space-5);
+    font-size: var(--sy-font-size-md);
+  }
+}

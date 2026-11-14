@@ -1,0 +1,54 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Spinner
+// ---------------------------------------------------------------------------
+
+.sy-spinner {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sy-space-2);
+  font-family: var(--sy-font-family);
+  font-size: var(--sy-font-size-md);
+  color: var(--sy-color-primary);
+
+  &__circle {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, currentColor 25%, transparent);
+    border-top-color: currentColor;
+    animation: sy-spin 600ms linear infinite;
+  }
+
+  &__label {
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-secondary);
+  }
+
+  &--sm {
+    font-size: var(--sy-font-size-xs);
+  }
+
+  &--lg {
+    font-size: var(--sy-font-size-xl);
+  }
+
+  &--success {
+    color: var(--sy-color-success);
+  }
+
+  &--warning {
+    color: var(--sy-color-warning);
+  }
+
+  &--danger {
+    color: var(--sy-color-danger);
+  }
+
+  &--neutral {
+    color: var(--sy-color-text-tertiary);
+  }
+}

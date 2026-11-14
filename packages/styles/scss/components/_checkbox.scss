@@ -1,0 +1,112 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Checkbox & CheckboxGroup
+// ---------------------------------------------------------------------------
+
+.sy-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sy-space-2);
+  font-family: var(--sy-font-family);
+  font-size: var(--sy-font-size-md);
+  color: var(--sy-color-text);
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--sy-duration-fast) var(--sy-ease);
+
+  &__box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    border: 1px solid var(--sy-color-border-strong);
+    border-radius: var(--sy-radius-xs);
+    background-color: var(--sy-color-bg);
+    color: var(--sy-color-text-inverse);
+    transition:
+      background-color var(--sy-duration-fast) var(--sy-ease),
+      border-color var(--sy-duration-fast) var(--sy-ease),
+      box-shadow var(--sy-duration-fast) var(--sy-ease);
+
+    .sy-icon {
+      width: 11px;
+      height: 11px;
+      transform: scale(0);
+      transition: transform var(--sy-duration-fast) var(--sy-ease);
+    }
+  }
+
+  &__label {
+    @include m.sy-ellipsis;
+
+    line-height: var(--sy-line-height);
+  }
+
+  // Focus ring drawn on the box when the visually-hidden input is focused
+  &__native:focus-visible + .sy-checkbox__box {
+    box-shadow: var(--sy-focus-ring);
+  }
+
+  &.is-checked,
+  &.is-indeterminate {
+    .sy-checkbox__box {
+      background-color: var(--sy-color-primary);
+      border-color: var(--sy-color-primary);
+
+      .sy-icon {
+        transform: scale(1);
+      }
+    }
+  }
+
+  &.is-indeterminate .sy-checkbox__box {
+    .sy-icon {
+      display: none;
+    }
+
+    &::after {
+      content: '';
+      width: 8px;
+      height: 2px;
+      border-radius: 1px;
+      background-color: var(--sy-color-text-inverse);
+    }
+  }
+
+  &--sm {
+    font-size: var(--sy-font-size-sm);
+
+    .sy-checkbox__box {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    color: var(--sy-color-text-disabled);
+
+    .sy-checkbox__box {
+      background-color: var(--sy-color-bg-tertiary);
+      border-color: var(--sy-color-border);
+    }
+
+    &.is-checked .sy-checkbox__box,
+    &.is-indeterminate .sy-checkbox__box {
+      background-color: var(--sy-color-text-disabled);
+      border-color: var(--sy-color-text-disabled);
+    }
+  }
+}
+
+.sy-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sy-space-3) var(--sy-space-4);
+  font-family: var(--sy-font-family);
+}

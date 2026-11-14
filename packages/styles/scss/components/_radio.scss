@@ -1,0 +1,88 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Radio & RadioGroup
+// ---------------------------------------------------------------------------
+
+.sy-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sy-space-2);
+  font-family: var(--sy-font-family);
+  font-size: var(--sy-font-size-md);
+  color: var(--sy-color-text);
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--sy-duration-fast) var(--sy-ease);
+
+  &__dot {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    border: 1px solid var(--sy-color-border-strong);
+    border-radius: var(--sy-radius-full);
+    background-color: var(--sy-color-bg);
+    transition:
+      border-color var(--sy-duration-fast) var(--sy-ease),
+      box-shadow var(--sy-duration-fast) var(--sy-ease);
+
+    &::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--sy-color-text-inverse);
+      transform: scale(0);
+      transition: transform var(--sy-duration-fast) var(--sy-ease);
+    }
+  }
+
+  &__label {
+    @include m.sy-ellipsis;
+
+    line-height: var(--sy-line-height);
+  }
+
+  &__native:focus-visible + .sy-radio__dot {
+    box-shadow: var(--sy-focus-ring);
+  }
+
+  &.is-checked {
+    .sy-radio__dot {
+      border-color: var(--sy-color-primary);
+      background-color: var(--sy-color-primary);
+
+      &::after {
+        transform: scale(1);
+      }
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    color: var(--sy-color-text-disabled);
+
+    .sy-radio__dot {
+      background-color: var(--sy-color-bg-tertiary);
+      border-color: var(--sy-color-border);
+    }
+
+    &.is-checked .sy-radio__dot {
+      background-color: var(--sy-color-text-disabled);
+      border-color: var(--sy-color-text-disabled);
+    }
+  }
+}
+
+.sy-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sy-space-3) var(--sy-space-4);
+  font-family: var(--sy-font-family);
+}

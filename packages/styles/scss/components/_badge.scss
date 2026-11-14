@@ -1,0 +1,65 @@
+// ---------------------------------------------------------------------------
+// Badge
+// ---------------------------------------------------------------------------
+
+.sy-badge {
+  position: relative;
+  display: inline-flex;
+  font-family: var(--sy-font-family);
+
+  // Per-color custom properties
+  --badge: var(--sy-color-danger);
+
+  &--primary {
+    --badge: var(--sy-color-primary);
+  }
+
+  &--success {
+    --badge: var(--sy-color-success);
+  }
+
+  &--warning {
+    --badge: var(--sy-color-warning);
+  }
+
+  &--danger {
+    --badge: var(--sy-color-danger);
+  }
+
+  &--neutral {
+    --badge: var(--sy-color-neutral);
+  }
+
+  &__count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: var(--sy-radius-full);
+    font-size: var(--sy-font-size-xs);
+    font-weight: var(--sy-font-weight-semibold);
+    line-height: 1;
+    color: var(--sy-color-text-inverse);
+    background-color: var(--badge);
+    box-shadow: 0 0 0 2px var(--sy-color-bg);
+    transform: translate(50%, -50%);
+    font-variant-numeric: tabular-nums;
+
+    &--dot {
+      min-width: 8px;
+      width: 8px;
+      height: 8px;
+      padding: 0;
+    }
+
+    &.is-empty {
+      display: none;
+    }
+  }
+}

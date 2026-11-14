@@ -1,0 +1,80 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Message (imperative toast)
+// ---------------------------------------------------------------------------
+
+.sy-message-wrapper {
+  position: fixed;
+  top: var(--sy-space-4);
+  left: 50%;
+  z-index: var(--sy-z-message);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sy-space-2);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.sy-message {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sy-space-2);
+  padding: 8px var(--sy-space-4);
+  border-radius: var(--sy-radius-full);
+  font-family: var(--sy-font-family);
+  font-size: var(--sy-font-size-sm);
+  color: var(--sy-color-text);
+  background-color: var(--sy-color-bg);
+  border: 1px solid var(--sy-color-border);
+  box-shadow: var(--sy-shadow-lg);
+  pointer-events: auto;
+  animation: sy-message-in var(--sy-duration-base) var(--sy-ease);
+
+  &__content {
+    @include m.sy-ellipsis;
+
+    max-width: 60vw;
+  }
+
+  .sy-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+
+  &--info .sy-icon {
+    color: var(--sy-color-primary);
+  }
+
+  &--success .sy-icon {
+    color: var(--sy-color-success);
+  }
+
+  &--warning .sy-icon {
+    color: var(--sy-color-warning);
+  }
+
+  &--danger .sy-icon {
+    color: var(--sy-color-danger);
+  }
+
+  &.is-closing {
+    animation: sy-message-out var(--sy-duration-base) var(--sy-ease) forwards;
+  }
+}
+
+@keyframes sy-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+  }
+}
+
+@keyframes sy-message-out {
+  to {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+  }
+}

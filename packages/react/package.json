@@ -1,0 +1,62 @@
+{
+  "name": "@sycee-ui/react",
+  "version": "0.1.0",
+  "description": "Sycee UI for React — a unified design system with first-class React components. Pairs with @sycee-ui/vue.",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "ui",
+    "components",
+    "react",
+    "design-system",
+    "component-library",
+    "typescript",
+    "vite",
+    "dark-mode",
+    "theming"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@sycee-ui/styles": "workspace:*",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "jsdom": "^31.0.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sass": "^1.108.2",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.8",
+    "vite-plugin-dts": "^5.1.2",
+    "vitest": "^5.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

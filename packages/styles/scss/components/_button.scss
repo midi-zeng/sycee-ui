@@ -1,0 +1,196 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Button
+// Variants are driven by a small set of local custom properties (--btn-*)
+// assigned per color, then consumed per variant. This keeps the 5x5
+// color/variant matrix declarative and theme-aware.
+// ---------------------------------------------------------------------------
+
+.sy-button {
+  @include m.sy-control-base;
+  @include m.sy-focus-ring;
+
+  gap: 6px;
+  height: var(--sy-height-md);
+  padding: 0 var(--sy-space-4);
+  border-radius: var(--sy-radius-md);
+  font-size: var(--sy-font-size-md);
+  font-weight: var(--sy-font-weight-medium);
+  white-space: nowrap;
+
+  // Per-color custom properties
+  --btn: var(--sy-color-primary);
+  --btn-hover: var(--sy-color-primary-hover);
+  --btn-active: var(--sy-color-primary-active);
+  --btn-soft: var(--sy-color-primary-soft);
+  --btn-soft-hover: var(--sy-color-primary-soft-hover);
+  --btn-soft-active: var(--sy-color-primary-soft-active);
+
+  &--success {
+    --btn: var(--sy-color-success);
+    --btn-hover: var(--sy-color-success-hover);
+    --btn-active: var(--sy-color-success-active);
+    --btn-soft: var(--sy-color-success-soft);
+    --btn-soft-hover: var(--sy-color-success-soft-hover);
+    --btn-soft-active: var(--sy-color-success-soft-active);
+  }
+
+  &--warning {
+    --btn: var(--sy-color-warning);
+    --btn-hover: var(--sy-color-warning-hover);
+    --btn-active: var(--sy-color-warning-active);
+    --btn-soft: var(--sy-color-warning-soft);
+    --btn-soft-hover: var(--sy-color-warning-soft-hover);
+    --btn-soft-active: var(--sy-color-warning-soft-active);
+  }
+
+  &--danger {
+    --btn: var(--sy-color-danger);
+    --btn-hover: var(--sy-color-danger-hover);
+    --btn-active: var(--sy-color-danger-active);
+    --btn-soft: var(--sy-color-danger-soft);
+    --btn-soft-hover: var(--sy-color-danger-soft-hover);
+    --btn-soft-active: var(--sy-color-danger-soft-active);
+  }
+
+  &--neutral {
+    --btn: var(--sy-color-text);
+    --btn-hover: var(--sy-color-text-secondary);
+    --btn-active: var(--sy-color-text-tertiary);
+    --btn-soft: var(--sy-color-neutral-soft);
+    --btn-soft-hover: var(--sy-color-neutral-soft-hover);
+    --btn-soft-active: var(--sy-color-neutral-soft-active);
+  }
+
+  // Variants
+  &--solid {
+    background-color: var(--btn);
+    color: var(--sy-color-text-inverse);
+
+    &:hover:not(:disabled) {
+      background-color: var(--btn-hover);
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--btn-active);
+    }
+  }
+
+  &--soft {
+    background-color: var(--btn-soft);
+    color: var(--btn);
+
+    &:hover:not(:disabled) {
+      background-color: var(--btn-soft-hover);
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--btn-soft-active);
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    border: 1px solid color-mix(in srgb, var(--btn) 45%, transparent);
+    color: var(--btn);
+
+    &:hover:not(:disabled) {
+      background-color: var(--btn-soft);
+      border-color: var(--btn);
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--btn-soft-hover);
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: var(--btn);
+
+    &:hover:not(:disabled) {
+      background-color: var(--btn-soft);
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--btn-soft-hover);
+    }
+  }
+
+  &--link {
+    height: auto;
+    padding: 0 2px;
+    background-color: transparent;
+    color: var(--btn);
+
+    &:hover:not(:disabled) {
+      color: var(--btn-hover);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    &:active:not(:disabled) {
+      color: var(--btn-active);
+    }
+  }
+
+  // Sizes
+  &--sm {
+    height: var(--sy-height-sm);
+    padding: 0 var(--sy-space-3);
+    border-radius: var(--sy-radius-sm);
+    font-size: var(--sy-font-size-sm);
+    gap: 4px;
+  }
+
+  &--lg {
+    height: var(--sy-height-lg);
+    padding: 0 var(--sy-space-5);
+    border-radius: var(--sy-radius-md);
+  }
+
+  &--block {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  // Loading
+  &.is-loading {
+    pointer-events: none;
+  }
+
+  &__spinner {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, currentColor 30%, transparent);
+    border-top-color: currentColor;
+    animation: sy-spin 600ms linear infinite;
+  }
+
+  .sy-icon {
+    width: 1em;
+    height: 1em;
+  }
+
+  // Disabled (keep last so it wins over variant styles)
+  &:disabled {
+    cursor: not-allowed;
+    background-color: var(--sy-color-bg-tertiary);
+    border-color: transparent;
+    color: var(--sy-color-text-disabled);
+
+    &.sy-button--link {
+      background-color: transparent;
+    }
+  }
+}
+
+@keyframes sy-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

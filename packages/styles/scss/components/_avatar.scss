@@ -1,0 +1,54 @@
+// ---------------------------------------------------------------------------
+// Avatar & AvatarGroup
+// ---------------------------------------------------------------------------
+@use '../mixins' as m;
+
+.sy-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  overflow: hidden;
+  font-family: var(--sy-font-family);
+  font-size: var(--sy-font-size-md);
+  font-weight: var(--sy-font-weight-medium);
+  color: var(--sy-color-text-secondary);
+  background-color: var(--sy-color-neutral-soft);
+  border-radius: var(--sy-radius-full);
+  user-select: none;
+
+  &__text {
+    @include m.sy-ellipsis;
+
+    padding: 0 2px;
+    line-height: 1;
+  }
+
+  &--sm {
+    width: 28px;
+    height: 28px;
+    font-size: var(--sy-font-size-sm);
+  }
+
+  &--lg {
+    width: 44px;
+    height: 44px;
+    font-size: var(--sy-font-size-lg);
+  }
+
+  &--square {
+    border-radius: var(--sy-radius-md);
+  }
+}
+
+.sy-avatar-group {
+  display: inline-flex;
+  align-items: center;
+
+  & > .sy-avatar:not(:first-child) {
+    margin-left: -8px;
+    box-shadow: 0 0 0 2px var(--sy-color-bg);
+  }
+}

@@ -1,0 +1,54 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Pagination
+// ---------------------------------------------------------------------------
+
+.sy-pagination {
+  font-family: var(--sy-font-family);
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sy-space-1);
+  }
+
+  &__item {
+    @include m.sy-control-base;
+    @include m.sy-focus-ring;
+
+    min-width: 32px;
+    height: 32px;
+    justify-content: center;
+    padding: 0 var(--sy-space-2);
+    border-radius: var(--sy-radius-sm);
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text);
+    font-variant-numeric: tabular-nums;
+
+    &:hover:not(.is-disabled) {
+      background-color: var(--sy-color-bg-tertiary);
+    }
+
+    &.is-active {
+      background-color: var(--sy-color-primary);
+      color: var(--sy-color-text-inverse);
+      font-weight: var(--sy-font-weight-medium);
+    }
+
+    &.is-disabled {
+      color: var(--sy-color-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+
+  &__ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    color: var(--sy-color-text-tertiary);
+    letter-spacing: 2px;
+  }
+}

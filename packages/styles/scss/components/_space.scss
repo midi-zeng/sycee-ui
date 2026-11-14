@@ -1,0 +1,27 @@
+// ---------------------------------------------------------------------------
+// Space
+// ---------------------------------------------------------------------------
+
+.sy-space {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sy-space-3);
+
+  &--sm {
+    gap: var(--sy-space-2);
+  }
+
+  &--lg {
+    gap: var(--sy-space-4);
+  }
+
+  &--vertical {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  &--wrap {
+    flex-wrap: wrap;
+    row-gap: var(--sy-space-2);
+  }
+}

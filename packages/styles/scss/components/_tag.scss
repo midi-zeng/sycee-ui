@@ -1,0 +1,113 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Tag
+// ---------------------------------------------------------------------------
+
+.sy-tag {
+  @include m.sy-control-base;
+
+  height: 24px;
+  gap: 4px;
+  padding: 0 var(--sy-space-3);
+  border-radius: var(--sy-radius-xs);
+  font-size: var(--sy-font-size-xs);
+  font-weight: var(--sy-font-weight-medium);
+  white-space: nowrap;
+  cursor: default;
+
+  // Per-color custom properties (same pattern as Button)
+  --tag: var(--sy-color-text-secondary);
+  --tag-soft: var(--sy-color-neutral-soft);
+  --tag-soft-hover: var(--sy-color-neutral-soft-hover);
+
+  &--primary {
+    --tag: var(--sy-color-primary);
+    --tag-soft: var(--sy-color-primary-soft);
+    --tag-soft-hover: var(--sy-color-primary-soft-hover);
+  }
+
+  &--success {
+    --tag: var(--sy-color-success);
+    --tag-soft: var(--sy-color-success-soft);
+    --tag-soft-hover: var(--sy-color-success-soft-hover);
+  }
+
+  &--warning {
+    --tag: var(--sy-color-warning);
+    --tag-soft: var(--sy-color-warning-soft);
+    --tag-soft-hover: var(--sy-color-warning-soft-hover);
+  }
+
+  &--danger {
+    --tag: var(--sy-color-danger);
+    --tag-soft: var(--sy-color-danger-soft);
+    --tag-soft-hover: var(--sy-color-danger-soft-hover);
+  }
+
+  // Variants
+  &--soft {
+    background-color: var(--tag-soft);
+    color: var(--tag);
+  }
+
+  &--solid {
+    background-color: var(--tag);
+    color: var(--sy-color-text-inverse);
+  }
+
+  &--outline {
+    background-color: transparent;
+    border: 1px solid color-mix(in srgb, var(--tag) 40%, transparent);
+    color: var(--tag);
+  }
+
+  // Layout tweaks
+  &--solid .sy-tag__close {
+    color: var(--sy-color-text-inverse);
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    margin-right: -4px;
+    padding: 2px;
+    border: none;
+    border-radius: var(--sy-radius-xs);
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--sy-duration-fast) var(--sy-ease);
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+
+    .sy-icon {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  &--sm {
+    height: 20px;
+    padding: 0 var(--sy-space-2);
+    font-size: 11px;
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+}

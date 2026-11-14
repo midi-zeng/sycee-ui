@@ -1,0 +1,196 @@
+// ---------------------------------------------------------------------------
+// Sycee UI — Design tokens
+// Every visual value is exposed as a CSS custom property so consumers can
+// re-theme the entire library (light/dark, brand colors, radii, motion)
+// without touching component code.
+// ---------------------------------------------------------------------------
+
+:root {
+  // Brand — primary
+  --sy-color-primary: #6e56cf;
+  --sy-color-primary-hover: #7d68d9;
+  --sy-color-primary-active: #6250bc;
+  --sy-color-primary-soft: #f1eefc;
+  --sy-color-primary-soft-hover: #e9e4fa;
+  --sy-color-primary-soft-active: #ddd6f7;
+
+  // Semantic colors
+  --sy-color-success: #2fa46c;
+  --sy-color-success-hover: #3bb377;
+  --sy-color-success-active: #28935f;
+  --sy-color-success-soft: #e7f5ee;
+  --sy-color-success-soft-hover: #dcefe4;
+  --sy-color-success-soft-active: #d0e9db;
+
+  --sy-color-warning: #d98e0b;
+  --sy-color-warning-hover: #e6a017;
+  --sy-color-warning-active: #c47f09;
+  --sy-color-warning-soft: #fbf2df;
+  --sy-color-warning-soft-hover: #f7ecd1;
+  --sy-color-warning-soft-active: #f2e5c3;
+
+  --sy-color-danger: #e5484d;
+  --sy-color-danger-hover: #ec5d5e;
+  --sy-color-danger-active: #d13438;
+  --sy-color-danger-soft: #fdecec;
+  --sy-color-danger-soft-hover: #fbdfdf;
+  --sy-color-danger-soft-active: #f9d2d2;
+
+  // Neutral
+  --sy-color-neutral: #8a8fa0;
+  --sy-color-neutral-hover: #575c6d;
+  --sy-color-neutral-active: #4a4f60;
+  --sy-color-neutral-soft: #f0f1f5;
+  --sy-color-neutral-soft-hover: #e8e9ef;
+  --sy-color-neutral-soft-active: #e0e2ea;
+
+  // Text
+  --sy-color-text: #1a1c25;
+  --sy-color-text-secondary: #575c6d;
+  --sy-color-text-tertiary: #8a8fa0;
+  --sy-color-text-disabled: #b5b8c6;
+  --sy-color-text-inverse: #ffffff;
+
+  // Backgrounds
+  --sy-color-bg: #ffffff;
+  --sy-color-bg-secondary: #f7f7fa;
+  --sy-color-bg-tertiary: #f0f1f5;
+  --sy-color-bg-inverse: #1a1c25;
+
+  // Borders
+  --sy-color-border: #e4e5ec;
+  --sy-color-border-strong: #cbcdd8;
+  --sy-color-border-inverse: #ffffff;
+
+  // Overlay
+  --sy-color-overlay: rgba(18, 20, 32, 0.55);
+
+  // Typography
+  --sy-font-family:
+    'Inter', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --sy-font-family-mono:
+    ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  --sy-font-size-xs: 12px;
+  --sy-font-size-sm: 13px;
+  --sy-font-size-md: 14px;
+  --sy-font-size-lg: 16px;
+  --sy-font-size-xl: 20px;
+  --sy-font-size-2xl: 24px;
+
+  --sy-font-weight-regular: 400;
+  --sy-font-weight-medium: 500;
+  --sy-font-weight-semibold: 600;
+
+  --sy-line-height: 1.5715;
+
+  // Control metrics
+  --sy-height-sm: 28px;
+  --sy-height-md: 36px;
+  --sy-height-lg: 42px;
+
+  // Radii
+  --sy-radius-xs: 4px;
+  --sy-radius-sm: 6px;
+  --sy-radius-md: 8px;
+  --sy-radius-lg: 12px;
+  --sy-radius-xl: 16px;
+  --sy-radius-full: 9999px;
+
+  // Spacing scale
+  --sy-space-1: 4px;
+  --sy-space-2: 8px;
+  --sy-space-3: 12px;
+  --sy-space-4: 16px;
+  --sy-space-5: 20px;
+  --sy-space-6: 24px;
+  --sy-space-7: 32px;
+  --sy-space-8: 40px;
+
+  // Elevation
+  --sy-shadow-sm: 0 1px 2px rgba(16, 17, 26, 0.06);
+  --sy-shadow-md:
+    0 2px 4px -2px rgba(16, 17, 26, 0.06), 0 4px 12px -2px rgba(16, 17, 26, 0.1);
+  --sy-shadow-lg:
+    0 4px 8px -4px rgba(16, 17, 26, 0.08), 0 16px 40px -12px rgba(16, 17, 26, 0.18);
+
+  // Focus
+  --sy-focus-ring: 0 0 0 3px color-mix(in srgb, var(--sy-color-primary) 26%, transparent);
+  --sy-focus-ring-danger: 0 0 0 3px color-mix(in srgb, var(--sy-color-danger) 26%, transparent);
+
+  // Motion
+  --sy-duration-fast: 120ms;
+  --sy-duration-base: 200ms;
+  --sy-duration-slow: 320ms;
+  --sy-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  // Z-index scale
+  --sy-z-dropdown: 1000;
+  --sy-z-modal: 1100;
+  --sy-z-message: 1200;
+  --sy-z-tooltip: 1300;
+}
+
+// ---------------------------------------------------------------------------
+// Dark theme — activated by `data-theme="dark"` on <html>
+// ---------------------------------------------------------------------------
+[data-theme='dark'] {
+  --sy-color-primary: #a78bfa;
+  --sy-color-primary-hover: #b79efc;
+  --sy-color-primary-active: #967bee;
+  --sy-color-primary-soft: #2e2a4d;
+  --sy-color-primary-soft-hover: #383360;
+  --sy-color-primary-soft-active: #423c72;
+
+  --sy-color-success: #3dd68c;
+  --sy-color-success-hover: #4edd97;
+  --sy-color-success-active: #2fc27d;
+  --sy-color-success-soft: #1e3a2e;
+  --sy-color-success-soft-hover: #254838;
+  --sy-color-success-soft-active: #2b5341;
+
+  --sy-color-warning: #f5b33b;
+  --sy-color-warning-hover: #f7bd52;
+  --sy-color-warning-active: #e9a62a;
+  --sy-color-warning-soft: #3d321b;
+  --sy-color-warning-soft-hover: #4a3d22;
+  --sy-color-warning-soft-active: #564829;
+
+  --sy-color-danger: #ff6369;
+  --sy-color-danger-hover: #ff7378;
+  --sy-color-danger-active: #f2555b;
+  --sy-color-danger-soft: #3f242a;
+  --sy-color-danger-soft-hover: #4d2c33;
+  --sy-color-danger-soft-active: #5b343c;
+
+  --sy-color-neutral: #9ba0b0;
+  --sy-color-neutral-hover: #a9aebc;
+  --sy-color-neutral-active: #b7bcc8;
+  --sy-color-neutral-soft: #23262f;
+  --sy-color-neutral-soft-hover: #2b2e38;
+  --sy-color-neutral-soft-active: #333642;
+
+  --sy-color-text: #eef0f6;
+  --sy-color-text-secondary: #a9aebc;
+  --sy-color-text-tertiary: #7c8295;
+  --sy-color-text-disabled: #565b6b;
+  --sy-color-text-inverse: #131419;
+
+  --sy-color-bg: #131419;
+  --sy-color-bg-secondary: #1b1d24;
+  --sy-color-bg-tertiary: #23262f;
+  --sy-color-bg-inverse: #eef0f6;
+
+  --sy-color-border: #2c2e38;
+  --sy-color-border-strong: #434655;
+  --sy-color-border-inverse: #131419;
+
+  --sy-color-overlay: rgba(0, 0, 0, 0.65);
+
+  --sy-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sy-shadow-md:
+    0 2px 4px -2px rgba(0, 0, 0, 0.4), 0 4px 12px -2px rgba(0, 0, 0, 0.45);
+  --sy-shadow-lg:
+    0 4px 8px -4px rgba(0, 0, 0, 0.45), 0 16px 40px -12px rgba(0, 0, 0, 0.6);
+}

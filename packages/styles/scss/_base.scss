@@ -1,0 +1,47 @@
+// ---------------------------------------------------------------------------
+// Sycee UI — Base
+// Light-touch reset scoped to Sycee class names only, so the library can be
+// dropped into any host app without fighting its global styles.
+// ---------------------------------------------------------------------------
+
+[class^='sy-'],
+[class*=' sy-'] {
+  box-sizing: border-box;
+}
+
+// Buttons rendered by Sycee inherit the surrounding font by default.
+.sy-button,
+.sy-switch,
+.sy-pagination__item,
+.sy-tabs__tab {
+  font-family: inherit;
+}
+
+// Native inputs inside Sycee fields inherit component typography.
+.sy-input__native,
+.sy-textarea__native {
+  font-family: inherit;
+  outline: none;
+  border: none;
+  background: transparent;
+}
+
+// Images
+.sy-avatar__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// Visually hidden, still focusable (checkbox / radio / switch native inputs).
+.sy-checkbox__native,
+.sy-radio__native {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}

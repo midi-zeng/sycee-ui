@@ -1,0 +1,98 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Alert
+// ---------------------------------------------------------------------------
+
+.sy-alert {
+  // Per-type custom properties
+  --alert: var(--sy-color-primary);
+  --alert-soft: var(--sy-color-primary-soft);
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sy-space-3);
+  padding: var(--sy-space-3) var(--sy-space-4);
+  border-radius: var(--sy-radius-md);
+  font-family: var(--sy-font-family);
+  background-color: var(--alert-soft);
+  border: 1px solid color-mix(in srgb, var(--alert) 28%, transparent);
+
+  &--info {
+    --alert: var(--sy-color-primary);
+    --alert-soft: var(--sy-color-primary-soft);
+  }
+
+  &--success {
+    --alert: var(--sy-color-success);
+    --alert-soft: var(--sy-color-success-soft);
+  }
+
+  &--warning {
+    --alert: var(--sy-color-warning);
+    --alert-soft: var(--sy-color-warning-soft);
+  }
+
+  &--danger {
+    --alert: var(--sy-color-danger);
+    --alert-soft: var(--sy-color-danger-soft);
+  }
+
+  &__icon {
+    display: inline-flex;
+    margin-top: 2px;
+    color: var(--alert);
+
+    .sy-icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: var(--sy-font-size-md);
+    font-weight: var(--sy-font-weight-semibold);
+    color: var(--sy-color-text);
+  }
+
+  &__description {
+    margin-top: var(--sy-space-1);
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-secondary);
+    line-height: var(--sy-line-height);
+  }
+
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1px;
+    padding: 2px;
+    border: none;
+    border-radius: var(--sy-radius-xs);
+    background-color: transparent;
+    color: var(--sy-color-text-tertiary);
+    cursor: pointer;
+    transition:
+      color var(--sy-duration-fast) var(--sy-ease),
+      background-color var(--sy-duration-fast) var(--sy-ease);
+
+    &:hover {
+      color: var(--sy-color-text-secondary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+
+    .sy-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}

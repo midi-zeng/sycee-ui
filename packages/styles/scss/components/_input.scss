@@ -1,0 +1,104 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Input
+// ---------------------------------------------------------------------------
+
+.sy-input {
+  @include m.sy-field-base;
+  @include m.sy-focus-ring;
+
+  height: var(--sy-height-md);
+  padding: 0 var(--sy-space-3);
+  gap: var(--sy-space-2);
+  cursor: text;
+
+  &__native {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+
+    &::placeholder {
+      color: var(--sy-color-text-tertiary);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &__prefix,
+  &__suffix {
+    display: inline-flex;
+    align-items: center;
+    color: var(--sy-color-text-tertiary);
+    line-height: 0;
+  }
+
+  &__clear {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--sy-color-text-tertiary);
+    transition: color var(--sy-duration-fast) var(--sy-ease);
+
+    &:hover {
+      color: var(--sy-color-text-secondary);
+    }
+  }
+
+  // Sizes
+  &--sm {
+    height: var(--sy-height-sm);
+    font-size: var(--sy-font-size-sm);
+  }
+
+  &--lg {
+    height: var(--sy-height-lg);
+    padding: 0 var(--sy-space-4);
+    font-size: var(--sy-font-size-md);
+  }
+
+  // Status
+  &--error {
+    border-color: var(--sy-color-danger);
+
+    &:hover:not(.is-disabled) {
+      border-color: var(--sy-color-danger-hover);
+    }
+
+    &:focus-within:not(.is-disabled) {
+      border-color: var(--sy-color-danger);
+      box-shadow: var(--sy-focus-ring-danger);
+    }
+  }
+
+  &--warning {
+    border-color: var(--sy-color-warning);
+
+    &:hover:not(.is-disabled) {
+      border-color: var(--sy-color-warning-hover);
+    }
+
+    &:focus-within:not(.is-disabled) {
+      border-color: var(--sy-color-warning);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--sy-color-warning) 26%, transparent);
+    }
+  }
+
+  // Disabled
+  &.is-disabled {
+    cursor: not-allowed;
+    background-color: var(--sy-color-bg-tertiary);
+    border-color: transparent;
+    color: var(--sy-color-text-disabled);
+
+    .sy-input__prefix,
+    .sy-input__suffix {
+      color: var(--sy-color-text-disabled);
+    }
+  }
+}

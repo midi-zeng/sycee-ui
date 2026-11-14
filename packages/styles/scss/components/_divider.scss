@@ -1,0 +1,64 @@
+// ---------------------------------------------------------------------------
+// Divider
+// ---------------------------------------------------------------------------
+
+.sy-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--sy-space-3);
+  margin: var(--sy-space-4) 0;
+  font-family: var(--sy-font-family);
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid var(--sy-color-border);
+  }
+
+  &--dashed {
+    &::before,
+    &::after {
+      border-top-style: dashed;
+    }
+  }
+
+  &__label {
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-tertiary);
+    white-space: nowrap;
+  }
+
+  // Label placement
+  &--left::before {
+    flex: 0 0 24px;
+  }
+
+  &--right::after {
+    flex: 0 0 24px;
+  }
+
+  // Vertical
+  &--vertical {
+    align-self: stretch;
+    flex-direction: column;
+    margin: 0 var(--sy-space-2);
+
+    &::before,
+    &::after {
+      flex: 1;
+      border-top: none;
+      border-left: 1px solid var(--sy-color-border);
+    }
+
+    &--dashed::before,
+    &--dashed::after {
+      border-left-style: dashed;
+    }
+
+    .sy-divider__label {
+      // no label support in vertical mode
+      display: none;
+    }
+  }
+}

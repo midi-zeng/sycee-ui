@@ -1,0 +1,24 @@
+{
+  "name": "@sycee-ui/styles",
+  "version": "0.1.0",
+  "description": "Sycee UI design tokens, theming variables and component styles (SCSS source + compiled CSS).",
+  "license": "MIT",
+  "type": "module",
+  "keywords": ["ui", "design-system", "scss", "tokens", "css-variables", "react", "vue"],
+  "files": ["dist", "scss"],
+  "exports": {
+    ".": "./dist/styles.css",
+    "./scss/*": "./scss/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": ["**/*.css"],
+  "scripts": {
+    "build": "sass scss/index.scss dist/styles.css --style=expanded --no-charset --source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.108.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

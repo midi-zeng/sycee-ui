@@ -1,0 +1,16 @@
+{
+  "$schema": "./node_modules/oxlint/config_schema.json",
+  "categories": {
+    "correctness": "error"
+  },
+  "plugins": ["typescript", "react", "unicorn"],
+  "ignorePatterns": [
+    "dist",
+    "node_modules",
+    "coverage",
+    "docs/.vitepress/dist",
+    "docs/.vitepress/cache",
+    "**/*.vue",
+    "**/*.d.ts"
+  ]
+}

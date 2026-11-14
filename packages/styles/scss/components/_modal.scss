@@ -1,0 +1,135 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Modal
+// ---------------------------------------------------------------------------
+
+.sy-modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: var(--sy-z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sy-space-6);
+  background-color: var(--sy-color-overlay);
+  animation: sy-fade-in var(--sy-duration-base) var(--sy-ease);
+}
+
+.sy-modal {
+  display: flex;
+  flex-direction: column;
+  width: 460px;
+  max-width: 100%;
+  max-height: calc(100vh - var(--sy-space-8) * 2);
+  background-color: var(--sy-color-bg);
+  border-radius: var(--sy-radius-xl);
+  box-shadow: var(--sy-shadow-lg);
+  animation: sy-modal-in var(--sy-duration-base) var(--sy-ease);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sy-space-3);
+    padding: var(--sy-space-5) var(--sy-space-6) 0;
+  }
+
+  &__title {
+    font-size: var(--sy-font-size-lg);
+    font-weight: var(--sy-font-weight-semibold);
+    color: var(--sy-color-text);
+  }
+
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-right: calc(var(--sy-space-3) * -1);
+    padding: 0;
+    border: none;
+    border-radius: var(--sy-radius-md);
+    background-color: transparent;
+    color: var(--sy-color-text-tertiary);
+    cursor: pointer;
+    transition:
+      background-color var(--sy-duration-fast) var(--sy-ease),
+      color var(--sy-duration-fast) var(--sy-ease);
+
+    &:hover {
+      background-color: var(--sy-color-bg-tertiary);
+      color: var(--sy-color-text-secondary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+  }
+
+  &__body {
+    padding: var(--sy-space-4) var(--sy-space-6);
+    font-size: var(--sy-font-size-md);
+    color: var(--sy-color-text-secondary);
+    overflow-y: auto;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--sy-space-3);
+    padding: var(--sy-space-2) var(--sy-space-6) var(--sy-space-5);
+  }
+}
+
+// Exit animations (React: .is-closing; Vue: Transition leave classes)
+.sy-modal-mask.is-closing {
+  animation: sy-fade-out var(--sy-duration-base) var(--sy-ease) forwards;
+
+  .sy-modal {
+    animation: sy-modal-out var(--sy-duration-base) var(--sy-ease) forwards;
+  }
+}
+
+// Vue <Transition name="sy-modal"> class hooks
+.sy-modal-enter-active,
+.sy-modal-leave-active {
+  transition: opacity var(--sy-duration-base) var(--sy-ease);
+}
+
+.sy-modal-enter-from,
+.sy-modal-leave-to {
+  opacity: 0;
+}
+
+.sy-modal-leave-active .sy-modal {
+  animation: sy-modal-out var(--sy-duration-base) var(--sy-ease) forwards;
+}
+
+@keyframes sy-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sy-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes sy-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+@keyframes sy-modal-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}

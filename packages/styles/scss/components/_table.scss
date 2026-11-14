@@ -1,0 +1,88 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Table
+// ---------------------------------------------------------------------------
+
+.sy-table {
+  position: relative;
+  font-family: var(--sy-font-family);
+  background-color: var(--sy-color-bg);
+  border: 1px solid var(--sy-color-border);
+  border-radius: var(--sy-radius-lg);
+  overflow: hidden;
+
+  &__scroll {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--sy-font-size-sm);
+  }
+
+  &__th {
+    padding: var(--sy-space-3) var(--sy-space-4);
+    text-align: left;
+    font-weight: var(--sy-font-weight-medium);
+    color: var(--sy-color-text-secondary);
+    background-color: var(--sy-color-bg-secondary);
+    border-bottom: 1px solid var(--sy-color-border);
+    white-space: nowrap;
+
+    &--center {
+      text-align: center;
+    }
+
+    &--right {
+      text-align: right;
+    }
+  }
+
+  &__td {
+    padding: var(--sy-space-3) var(--sy-space-4);
+    color: var(--sy-color-text);
+    border-bottom: 1px solid var(--sy-color-border);
+
+    &--center {
+      text-align: center;
+    }
+
+    &--right {
+      text-align: right;
+    }
+  }
+
+  &__row:last-child .sy-table__td {
+    border-bottom: none;
+  }
+
+  &--striped .sy-table__row:nth-child(even) {
+    background-color: var(--sy-color-bg-secondary);
+  }
+
+  &--bordered {
+    .sy-table__th:not(:last-child),
+    .sy-table__td:not(:last-child) {
+      border-right: 1px solid var(--sy-color-border);
+    }
+  }
+
+  &__empty {
+    padding: var(--sy-space-7) var(--sy-space-4);
+    color: var(--sy-color-text-tertiary);
+    text-align: center;
+  }
+
+  &__loading {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: color-mix(in srgb, var(--sy-color-bg) 65%, transparent);
+    border-radius: inherit;
+  }
+}

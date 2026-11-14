@@ -1,0 +1,83 @@
+// ---------------------------------------------------------------------------
+// Sycee UI — Shared SCSS mixins
+// ---------------------------------------------------------------------------
+
+// Accessible focus ring drawn only for keyboard focus.
+@mixin sy-focus-ring {
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--sy-focus-ring);
+  }
+}
+
+@mixin sy-focus-ring-danger {
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--sy-focus-ring-danger);
+  }
+}
+
+// Single-line ellipsis.
+@mixin sy-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// Multi-line ellipsis ($lines >= 1).
+@mixin sy-ellipsis-lines($lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: #{$lines};
+  overflow: hidden;
+}
+
+// Common base for interactive controls (buttons, inputs, selects, ...).
+@mixin sy-control-base {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: var(--sy-font-family);
+  font-size: var(--sy-font-size-md);
+  line-height: var(--sy-line-height);
+  color: var(--sy-color-text);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    color var(--sy-duration-fast) var(--sy-ease),
+    background-color var(--sy-duration-fast) var(--sy-ease),
+    border-color var(--sy-duration-fast) var(--sy-ease),
+    box-shadow var(--sy-duration-fast) var(--sy-ease);
+}
+
+// Base for boxed form controls (input, select trigger, textarea).
+@mixin sy-field-base {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--sy-font-family);
+  font-size: var(--sy-font-size-md);
+  line-height: var(--sy-line-height);
+  color: var(--sy-color-text);
+  background-color: var(--sy-color-bg);
+  border: 1px solid var(--sy-color-border);
+  border-radius: var(--sy-radius-md);
+  transition:
+    color var(--sy-duration-fast) var(--sy-ease),
+    background-color var(--sy-duration-fast) var(--sy-ease),
+    border-color var(--sy-duration-fast) var(--sy-ease),
+    box-shadow var(--sy-duration-fast) var(--sy-ease);
+
+  &:hover:not(.is-disabled) {
+    border-color: var(--sy-color-border-strong);
+  }
+
+  &:focus-within:not(.is-disabled) {
+    border-color: var(--sy-color-primary);
+    box-shadow: var(--sy-focus-ring);
+  }
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="sy-g" x1="12" y1="8" x2="52" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8b76e0" />
+      <stop offset="1" stop-color="#5c48b8" />
+    </linearGradient>
+    <linearGradient id="sy-g2" x1="16" y1="26" x2="48" y2="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c4b8f2" />
+      <stop offset="1" stop-color="#9d8ae8" />
+    </linearGradient>
+  </defs>
+  <!-- Sycee ingot: boat-shaped base with dome -->
+  <path d="M10 42c0-2.8 2.2-5 5-5h34c2.8 0 5 2.2 5 5l3.4 9.5c.9 2.5-1 5.1-3.6 5.1H10.2c-2.7 0-4.5-2.6-3.6-5.1L10 42Z" fill="url(#sy-g)" />
+  <path d="M32 8c9.9 0 18 7.6 18 17.4 0 4.6-1.8 8.8-4.9 11.6H18.9C15.8 34.2 14 30 14 25.4 14 15.6 22.1 8 32 8Z" fill="url(#sy-g2)" />
+  <path d="M22 47.5c3.2 1.8 6.4 2.7 10 2.7s6.8-.9 10-2.7" stroke="#f3f0ff" stroke-width="2.4" stroke-linecap="round" opacity="0.9" />
+</svg>

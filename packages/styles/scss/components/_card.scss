@@ -1,0 +1,51 @@
+// ---------------------------------------------------------------------------
+// Card
+// ---------------------------------------------------------------------------
+
+.sy-card {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--sy-font-family);
+  background-color: var(--sy-color-bg);
+  border: 1px solid var(--sy-color-border);
+  border-radius: var(--sy-radius-lg);
+  transition: box-shadow var(--sy-duration-base) var(--sy-ease);
+
+  &--hoverable:hover {
+    box-shadow: var(--sy-shadow-md);
+  }
+
+  &--borderless {
+    border-color: transparent;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sy-space-3);
+    padding: var(--sy-space-5) var(--sy-space-5) 0;
+  }
+
+  &__title {
+    font-size: var(--sy-font-size-lg);
+    font-weight: var(--sy-font-weight-semibold);
+    color: var(--sy-color-text);
+  }
+
+  &__extra {
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-tertiary);
+  }
+
+  &__body {
+    padding: var(--sy-space-4) var(--sy-space-5);
+    font-size: var(--sy-font-size-md);
+    color: var(--sy-color-text-secondary);
+    line-height: var(--sy-line-height);
+  }
+
+  &__footer {
+    padding: 0 var(--sy-space-5) var(--sy-space-5);
+  }
+}

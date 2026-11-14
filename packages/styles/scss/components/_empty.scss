@@ -1,0 +1,24 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Empty
+// ---------------------------------------------------------------------------
+
+.sy-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sy-space-3);
+  padding: var(--sy-space-7) var(--sy-space-4);
+  font-family: var(--sy-font-family);
+
+  &__image {
+    color: var(--sy-color-text-tertiary);
+    opacity: 0.75;
+  }
+
+  &__description {
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-tertiary);
+  }
+}
