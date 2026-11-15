@@ -24,6 +24,12 @@ export { Empty } from './components/empty/Empty';
 export type { EmptyProps } from './components/empty/Empty';
 export { Space } from './components/space/Space';
 export type { SpaceProps } from './components/space/Space';
+export { NinePatch } from './components/nine-patch/NinePatch';
+export type {
+  NinePatchProps,
+  NinePatchCustomOptions,
+  NinePatchBoxEdges,
+} from './components/nine-patch/NinePatch';
 
 // Data entry
 export { Input } from './components/input/Input';
@@ -50,6 +56,8 @@ export { message } from './components/message/message';
 export type { MessageApi, MessageType } from './components/message/message';
 export { Modal } from './components/modal/Modal';
 export type { ModalProps } from './components/modal/Modal';
+export { dialog } from './components/modal/dialog';
+export type { DialogApi, DialogConfig, DialogHandle } from './components/modal/dialog';
 export { Tooltip } from './components/tooltip/Tooltip';
 export type {
   TooltipProps,

@@ -38,6 +38,9 @@
     "test": "vitest run",
     "typecheck": "vue-tsc --noEmit"
   },
+  "dependencies": {
+    "ninepatch-core": "^3.0.0"
+  },
   "peerDependencies": {
     "vue": ">=3.4.0"
   },

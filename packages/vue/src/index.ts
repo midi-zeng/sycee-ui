@@ -9,6 +9,8 @@ export { default as Radio } from './components/radio/Radio.vue';
 export { default as RadioGroup } from './components/radio/RadioGroup.vue';
 export { default as Switch } from './components/switch/Switch.vue';
 export { default as Modal } from './components/modal/Modal.vue';
+export { dialog } from './components/modal/dialog';
+export type { DialogApi, DialogConfig, DialogHandle } from './components/modal/dialog';
 export { default as Tooltip } from './components/tooltip/Tooltip.vue';
 export { default as Tag } from './components/tag/Tag.vue';
 export { default as Alert } from './components/alert/Alert.vue';
@@ -23,6 +25,8 @@ export { default as Progress } from './components/progress/Progress.vue';
 export { default as Empty } from './components/empty/Empty.vue';
 export { default as Space } from './components/space/Space.vue';
 export { default as Divider } from './components/divider/Divider.vue';
+export { default as NinePatch } from './components/nine-patch/NinePatch.vue';
+export type { NinePatchProps, NinePatchCustomOptions, NinePatchBoxEdges } from './components/nine-patch/types';
 // Navigation & data display
 export { default as Tabs } from './components/tabs/Tabs.vue';
 export { default as Pagination } from './components/pagination/Pagination.vue';

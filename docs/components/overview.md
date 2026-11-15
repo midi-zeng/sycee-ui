@@ -4,7 +4,7 @@ title: Overview
 
 # Components
 
-Sycee UI ships **24 components** in both `@sycee-ui/react` and `@sycee-ui/vue`,
+Sycee UI ships **25 components** in both `@sycee-ui/react` and `@sycee-ui/vue`,
 sharing one stylesheet and one design language.
 
 ## General
@@ -20,6 +20,7 @@ sharing one stylesheet and one design language.
 | [Divider](/components/divider) | Horizontal / vertical separator with label |
 | [Empty](/components/empty) | Empty-state placeholder with illustration |
 | [Space](/components/space) | Flex layout with consistent gaps |
+| [NinePatch](/components/nine-patch) | Android nine-patch images rendered with CSS border-image |
 
 ## Data entry
 

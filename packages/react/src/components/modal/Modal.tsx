@@ -90,6 +90,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
 ) {
   const [closing, setClosing] = useState(false);
   const [hidden, setHidden] = useState(false);
+  // Mirrors the `open` prop with a one-frame lag so closing through the prop
+  // can animate out instead of vanishing on the same render.
+  const [shown, setShown] = useState(open);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const restoreFocusRef = useRef<HTMLElement | null>(null);
   const closeTimerRef = useRef<number | null>(null);
@@ -98,7 +101,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
   const onOpenRef = useRef(onOpen);
   onOpenRef.current = onOpen;
 
-  const visible = open && !hidden;
+  const visible = (shown || closing) && !hidden;
 
   const setPanelRef = (node: HTMLDivElement | null) => {
     panelRef.current = node;
@@ -120,16 +123,35 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
     }, CLOSE_DURATION);
   }, [closing, onClose]);
 
-  // Reset local close state when the dialog is (re)opened through the prop.
+  // Sync with the `open` prop. Reopening cancels any pending close and resets
+  // local state; closing through the prop runs the same exit animation as
+  // internal closes (Esc, mask, X) instead of vanishing, matching the Vue
+  // implementation's `<Transition>` leave. A prop-driven close emits no
+  // `onClose` — it is not a user-initiated dismissal.
+  const openPropRef = useRef(open);
   useEffect(() => {
-    if (!open) return;
-    if (closeTimerRef.current !== null) {
-      window.clearTimeout(closeTimerRef.current);
-      closeTimerRef.current = null;
+    const wasOpen = openPropRef.current;
+    openPropRef.current = open;
+    if (open === wasOpen) return;
+    if (open) {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+      }
+      setShown(true);
+      setHidden(false);
+      setClosing(false);
+      return;
     }
-    setHidden(false);
-    setClosing(false);
-  }, [open]);
+    if (!shown || closing || hidden) return;
+    setClosing(true);
+    closeTimerRef.current = window.setTimeout(() => {
+      closeTimerRef.current = null;
+      setShown(false);
+      setHidden(true);
+      setClosing(false);
+    }, CLOSE_DURATION);
+  }, [open, shown, closing, hidden]);
 
   // Scroll lock, focus management and the `open` event while visible.
   useEffect(() => {

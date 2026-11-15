@@ -18,6 +18,7 @@ pnpm-debug.log*
 .DS_Store
 .idea
 .vscode/*
+.zcode/
 !.vscode/extensions.json
 *.tsbuildinfo
 

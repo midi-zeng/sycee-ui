@@ -78,6 +78,7 @@ export default defineConfig({
             { text: 'Space', link: '/components/space' },
             { text: 'Divider', link: '/components/divider' },
             { text: 'Empty', link: '/components/empty' },
+            { text: 'NinePatch', link: '/components/nine-patch' },
           ],
         },
       ],

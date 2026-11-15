@@ -158,6 +158,9 @@ Default size everywhere: `md`. Sizes map to `--sm/--md/--lg` modifiers.
     - `.sy-modal__footer` > Cancel (ghost button) + OK (primary button)
   - Enter animation: mask fades in, panel scales 0.96→1 + translateY 8px→0. Exit: same reversed via `.is-closing` on mask; unmount after ~200ms. (Vue: use `<Transition name="sy-modal">` — SCSS defines the matching `sy-modal-enter-*`/`sy-modal-leave-*` classes.)
 - A: `role="dialog"`, `aria-modal="true"`, `aria-labelledby` (title id via useId). Esc closes (when closeOnEsc). Body scroll locked while open. Focus moves into panel on open, returns to previously focused element on close. Minimal Tab trap (loop first/last focusable).
+- Imperative API: `dialog.confirm(config)`, `dialog.alert(config)` plus `dialog.clear()`. `config`: `title`, `content` (string/VNode in Vue, ReactNode in React), `okText` ('OK'), `cancelText` ('Cancel', confirm only), `width` (460), `maskClosable` (true), `closeOnEsc` (true), `onOk`, `onCancel`. Returns `{ destroy() }`.
+- Imperative semantics: OK → `onOk` fires, then the dialog closes itself; any other dismissal (cancel button, close button, mask, Escape) → `onCancel`; `destroy()`/`clear()` fire no callbacks.
+- Imperative implementation: each call mounts the regular Modal into its own container `<div>` on `document.body` (`createVNode`/`render` in Vue, `createRoot` in React); the container unmounts after the ~200ms exit animation. Reuses Modal classes/behavior — no extra classes or styles.
 
 ### 7.10 Tooltip
 - P: `content: string`, `placement?: 'top'|'bottom'|'left'|'right' (default 'top')`, `trigger?: 'hover'|'click'|'focus' (default 'hover')`, `disabled?: boolean`, `theme?: 'dark'|'light' (default 'dark')`
@@ -251,6 +254,15 @@ Default size everywhere: `md`. Sizes map to `--sm/--md/--lg` modifiers.
 - P: `description?: string (default 'No data')`
 - S: default (replaces description), `image`
 - C: `.sy-empty` > `.sy-empty__image` (inline SVG illustration, currentColor-based, subtle) + `.sy-empty__description`
+
+### 7.25 NinePatch
+- P: `src?: string` — a raw `.9.png` source (1px guide borders) or an AAPT-compiled PNG (npTc chunk)
+- P: `customOptions?: { padding?: NinePatchBoxEdges; borderImageSlice?: NinePatchBoxEdges; borderInset?: number }` — manual overrides; when set, the image is not parsed at all
+- P: `NinePatchBoxEdges = { top?: number; right?: number; bottom?: number; left?: number }` (px)
+- S: default (content rendered on top of the stretched background)
+- C: `.sy-nine-patch` (div) — border-image source/slice/width + padding longhands applied inline from parsed data (xDivs → left/right slice, yDivs → top/bottom slice); raw sources add `clip-path: inset(1px)` via `borderInset`; content box keeps `height: 100%`
+- A: static container; default slot/children content stays accessible
+- Note: parsing is delegated to the `ninepatch-core` runtime dependency (raw border rules or npTc chunk); the stretchable background is painted by CSS `border-image`, so the block ships no themed styles — only layout baselines in `_nine-patch.scss`
 
 ---
 

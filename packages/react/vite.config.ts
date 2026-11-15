@@ -24,7 +24,7 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2020',
     rollupOptions: {
-      external: [/^react(\/.*)?$/, /^react-dom(\/.*)?$/, /^scheduler(\/.*)?$/],
+      external: [/^react(\/.*)?$/, /^react-dom(\/.*)?$/, /^scheduler(\/.*)?$/, /^ninepatch-core$/],
     },
   },
   test: {

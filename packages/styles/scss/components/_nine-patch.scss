@@ -1,0 +1,10 @@
+// ---------------------------------------------------------------------------
+// NinePatch
+// The stretched background is painted by inline border-image styles derived
+// from the parsed image, so this block only provides layout baselines.
+// ---------------------------------------------------------------------------
+.sy-nine-patch {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+}

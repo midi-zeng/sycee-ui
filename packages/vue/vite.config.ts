@@ -25,7 +25,7 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2020',
     rollupOptions: {
-      external: [/^vue(\/.*)?$/, /^@vue\/.*$/],
+      external: [/^vue(\/.*)?$/, /^@vue\/.*$/, /^ninepatch-core$/],
     },
   },
   test: {

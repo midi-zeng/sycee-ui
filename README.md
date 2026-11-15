@@ -39,9 +39,13 @@ Sycee UI takes the best idea from each and applies it to **both** ecosystems:
 
 | Package | Description | Version |
 | --- | --- | --- |
-| [`@sycee-ui/react`](./packages/react) | 24 React components (forwardRef, strict types) | [![npm](https://img.shields.io/npm/v/@sycee-ui/react)](https://www.npmjs.com/package/@sycee-ui/react) |
-| [`@sycee-ui/vue`](./packages/vue) | The same 24 components as Vue 3 SFCs (`v-model`, slots) | [![npm](https://img.shields.io/npm/v/@sycee-ui/vue)](https://www.npmjs.com/package/@sycee-ui/vue) |
+| [`@sycee-ui/react`](./packages/react) | 25 React components (forwardRef, strict types) | [![npm](https://img.shields.io/npm/v/@sycee-ui/react)](https://www.npmjs.com/package/@sycee-ui/react) |
+| [`@sycee-ui/vue`](./packages/vue) | The same 25 components as Vue 3 SFCs (`v-model`, slots) | [![npm](https://img.shields.io/npm/v/@sycee-ui/vue)](https://www.npmjs.com/package/@sycee-ui/vue) |
 | [`@sycee-ui/styles`](./packages/styles) | SCSS design tokens + compiled stylesheet | [![npm](https://img.shields.io/npm/v/@sycee-ui/styles)](https://www.npmjs.com/package/@sycee-ui/styles) |
+
+Requires **React ≥ 18** or **Vue ≥ 3.4**. Both component packages ship the
+compiled stylesheet themselves (`styles.css`), so `@sycee-ui/styles` is only
+needed if you want the SCSS source.
 
 ## Quick start
 
@@ -87,14 +91,74 @@ const name = ref('');
 
 Don't forget: `import '@sycee-ui/vue/styles.css'`.
 
+## Components
+
+25 components, identical in both packages — every docs page shows live demos
+for React and Vue side by side:
+
+| Category | Components |
+| --- | --- |
+| General | [Button](https://midi-zeng.github.io/sycee-ui/components/button) · [Icon](https://midi-zeng.github.io/sycee-ui/components/icon) · [Card](https://midi-zeng.github.io/sycee-ui/components/card) · [Tag](https://midi-zeng.github.io/sycee-ui/components/tag) · [Avatar](https://midi-zeng.github.io/sycee-ui/components/avatar) · [Badge](https://midi-zeng.github.io/sycee-ui/components/badge) · [Divider](https://midi-zeng.github.io/sycee-ui/components/divider) · [Empty](https://midi-zeng.github.io/sycee-ui/components/empty) · [Space](https://midi-zeng.github.io/sycee-ui/components/space) · [NinePatch](https://midi-zeng.github.io/sycee-ui/components/nine-patch) |
+| Data entry | [Input](https://midi-zeng.github.io/sycee-ui/components/input) · [Textarea](https://midi-zeng.github.io/sycee-ui/components/textarea) · [Select](https://midi-zeng.github.io/sycee-ui/components/select) · [Checkbox](https://midi-zeng.github.io/sycee-ui/components/checkbox) · [Radio](https://midi-zeng.github.io/sycee-ui/components/radio) · [Switch](https://midi-zeng.github.io/sycee-ui/components/switch) |
+| Feedback | [Alert](https://midi-zeng.github.io/sycee-ui/components/alert) · [Message](https://midi-zeng.github.io/sycee-ui/components/message) · [Modal](https://midi-zeng.github.io/sycee-ui/components/modal) · [Tooltip](https://midi-zeng.github.io/sycee-ui/components/tooltip) · [Spinner](https://midi-zeng.github.io/sycee-ui/components/spinner) · [Progress](https://midi-zeng.github.io/sycee-ui/components/progress) |
+| Navigation & data display | [Tabs](https://midi-zeng.github.io/sycee-ui/components/tabs) · [Pagination](https://midi-zeng.github.io/sycee-ui/components/pagination) · [Table](https://midi-zeng.github.io/sycee-ui/components/table) |
+
+## Imperative APIs
+
+`message` and `dialog` work without any template/JSX state — call them from
+event handlers, effects or stores. Both packages export the same signatures.
+
+```tsx
+import { message, dialog } from '@sycee-ui/react'; // or '@sycee-ui/vue'
+
+message.success('Saved!');
+message.warning('Careful there', 3000); // content, duration (ms)
+
+dialog.confirm({
+  title: 'Delete item?',
+  content: 'This action cannot be undone.',
+  onOk: () => deleteItem(),
+});
+```
+
+`dialog.confirm` shows OK + Cancel; `dialog.alert` shows a single OK button;
+`dialog.clear()` closes everything. Every call returns a handle with
+`destroy()`. See the [Modal docs](https://midi-zeng.github.io/sycee-ui/components/modal)
+for the full config.
+
+## Theming
+
+Every visual value is a `--sy-*` CSS variable. Override them on `:root` to
+re-brand the whole library — no rebuild, no Sass required:
+
+```css
+:root {
+  --sy-color-primary: #0ea5e9;
+  --sy-color-primary-hover: #38bdf8;
+  --sy-radius-md: 10px;
+}
+```
+
+Dark mode ships ready-made: set `data-theme="dark"` on the `<html>` element
+(and back to `"light"`, or remove the attribute, to return).
+
+```js
+document.documentElement.dataset.theme = 'dark';
+```
+
+Prefer Sass? `@sycee-ui/styles` publishes the SCSS source (`@sycee-ui/styles/scss/*`),
+so you can import individual token files or bake overrides in at compile time.
+
 ## Features
 
-- **24 components** — Button, Input, Textarea, Select, Checkbox, Radio, Switch,
-  Modal, Tooltip, Message (toasts), Card, Tag, Alert, Avatar, Badge, Spinner,
-  Progress, Tabs, Pagination, Table, Icon, Space, Divider, Empty
-- **CSS-variable theming** — re-brand the library by overriding tokens; dark
-  mode via `data-theme="dark"`
-- **Accessible** — WAI-ARIA roles, keyboard navigation, focus-visible rings
+- **25 components** — one stylesheet, one design language, parallel APIs for
+  React 18+ and Vue 3.4+
+- **CSS-variable theming** — re-brand by overriding tokens; dark mode via
+  `data-theme="dark"`
+- **Imperative APIs** — `message` toasts and `dialog` confirm/alert dialogs
+  callable from anywhere
+- **Accessible** — WAI-ARIA roles, keyboard navigation, focus-visible rings,
+  focus management in overlays
 - **Tree-shakable ESM** — named exports, `sideEffects`-aware packaging
 - **TypeScript-first** — strict types, bundled `.d.ts`
 - **Oxc-powered toolchain** — Vite 8 (Rolldown engine) + oxlint
@@ -113,6 +177,7 @@ pnpm dev        # docs site with live demos
 pnpm build      # build all packages
 pnpm test       # run tests (vitest)
 pnpm lint       # oxlint
+pnpm typecheck  # tsc / vue-tsc per package
 ```
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for the component spec, release flow

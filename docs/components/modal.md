@@ -15,6 +15,10 @@ import WidthVue from '../demos/modal/Width.vue';
 import widthVueCode from '../demos/modal/Width.vue?raw';
 import WidthTsx from '../demos/modal/Width.tsx';
 import widthTsxCode from '../demos/modal/Width.tsx?raw';
+import ImperativeVue from '../demos/modal/Imperative.vue';
+import imperativeVueCode from '../demos/modal/Imperative.vue?raw';
+import ImperativeTsx from '../demos/modal/Imperative.tsx';
+import imperativeTsxCode from '../demos/modal/Imperative.tsx?raw';
 </script>
 
 # Modal
@@ -46,6 +50,19 @@ Replace the default OK/Cancel buttons with the `footer` slot (Vue) or the
 dismiss the dialog (Escape still works unless you also set `closeOnEsc={false}`).
 
 <DemoBlock :vue-demo="WidthVue" :vue-code="widthVueCode" :react-demo="WidthTsx" :react-code="widthTsxCode" />
+
+## Imperative API
+
+Skip the template entirely: import `dialog` and call it from anywhere — event
+handlers, effects, stores. It mounts a regular Modal for you and tears it
+down after the exit animation. `confirm` shows OK and Cancel; `alert` shows
+a single OK button.
+
+<DemoBlock :vue-demo="ImperativeVue" :vue-code="imperativeVueCode" :react-demo="ImperativeTsx" :react-code="imperativeTsxCode" />
+
+Pressing OK calls `onOk` and closes the dialog for you; every other dismissal
+(cancel button, X, mask, Escape) calls `onCancel`. The returned handle has
+`destroy()`, which closes the dialog without calling any callback.
 
 ## Accessibility
 
@@ -86,3 +103,31 @@ previously focused element on close, and Tab cycles within the panel.
 | cancel *(Vue)* / `onCancel` *(React)* | Cancel/X was pressed — the dialog then starts closing (update your state too) |
 | open *(Vue)* / `onOpen` *(React)* | The dialog became visible |
 | close *(Vue)* / `onClose` *(React)* | A close was initiated (Esc, mask, close button or cancel) |
+
+### Imperative API
+
+The package exports a `dialog` object per framework (`@sycee-ui/vue` /
+`@sycee-ui/react`) with the same signature:
+
+| Method | Signature | Description |
+| --- | --- | --- |
+| confirm | `dialog.confirm(config)` | Opens a dialog with OK and Cancel buttons |
+| alert | `dialog.alert(config)` | Opens a dialog with a single OK button |
+| clear | `dialog.clear()` | Closes every open dialog without calling callbacks |
+
+`config` accepts:
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| title | `string` *(Vue)* / `ReactNode` *(React)* | — | Header title |
+| content | `string \| VNode` *(Vue)* / `ReactNode` *(React)* | — | Dialog body |
+| okText | `string` | `'OK'` | Text of the confirm button |
+| cancelText | `string` | `'Cancel'` | Text of the cancel button (confirm only) |
+| width | `number \| string` | `460` | Panel width; numbers become px |
+| maskClosable | `boolean` | `true` | Closes when the mask is clicked |
+| closeOnEsc | `boolean` | `true` | Closes when Escape is pressed |
+| onOk | `() => void` | — | Called when the confirm button is pressed; the dialog closes itself afterwards |
+| onCancel | `() => void` | — | Called when the dialog is dismissed without confirming (cancel button, X, mask, Escape) |
+
+Every call returns a handle with `destroy()`, which closes the dialog without
+calling any callback.
