@@ -16,7 +16,8 @@
     "theming"
   ],
   "files": [
-    "dist"
+    "dist",
+    "NOTICE.md"
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
