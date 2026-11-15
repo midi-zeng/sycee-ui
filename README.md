@@ -15,7 +15,7 @@ class names, the same visual output, with parallel APIs across both packages.
 [![Docs](https://img.shields.io/badge/docs-github%20pages-blue)](https://midi-zeng.github.io/sycee-ui/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
-[Documentation](https://midi-zeng.github.io/sycee-ui/) · [Playground](https://midi-zeng.github.io/sycee-ui/playground/) · [Changelog](./CHANGELOG.md) · [Sponsor ♥](https://github.com/sponsors/midi-zeng)
+[Documentation](https://midi-zeng.github.io/sycee-ui/) · [Playground](https://midi-zeng.github.io/sycee-ui/playground/) · [Changelog](https://github.com/midi-zeng/sycee-ui/releases) · [Sponsor ♥](https://github.com/sponsors/midi-zeng)
 
 </div>
 
