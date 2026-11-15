@@ -27,11 +27,11 @@ export default defineConfig({
         items: [
           {
             text: 'Changelog',
-            link: 'https://github.com/sycee-ui/sycee-ui/releases',
+            link: 'https://github.com/midi-zeng/sycee-ui/releases',
           },
           {
             text: 'Contributing',
-            link: 'https://github.com/sycee-ui/sycee-ui/blob/main/CONTRIBUTING.md',
+            link: 'https://github.com/midi-zeng/sycee-ui/blob/main/CONTRIBUTING.md',
           },
         ],
       },
@@ -84,7 +84,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/sycee-ui/sycee-ui' },
+      { icon: 'github', link: 'https://github.com/midi-zeng/sycee-ui' },
     ],
 
     search: {

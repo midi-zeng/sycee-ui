@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.1.4/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "zengfukun/sycee-ui" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "midi-zeng/sycee-ui" }],
   "commit": false,
   "fixed": [["@sycee-ui/react", "@sycee-ui/vue", "@sycee-ui/styles"]],
   "linked": [],

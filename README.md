@@ -9,13 +9,13 @@
 A unified component library for React and Vue — the same tokens, the same
 class names, the same visual output, with parallel APIs across both packages.
 
-[![CI](https://github.com/zengfukun/sycee-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/zengfukun/sycee-ui/actions/workflows/ci.yml)
+[![CI](https://github.com/midi-zeng/sycee-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/midi-zeng/sycee-ui/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@sycee-ui/react?label=%40sycee-ui%2Freact&logo=npm&color=cb3837)](https://www.npmjs.com/package/@sycee-ui/react)
 [![npm](https://img.shields.io/npm/v/@sycee-ui/vue?label=%40sycee-ui%2Fvue&logo=npm&color=cb3837)](https://www.npmjs.com/package/@sycee-ui/vue)
-[![Docs](https://img.shields.io/badge/docs-github%20pages-blue)](https://zengfukun.github.io/sycee-ui/)
+[![Docs](https://img.shields.io/badge/docs-github%20pages-blue)](https://midi-zeng.github.io/sycee-ui/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
-[Documentation](https://zengfukun.github.io/sycee-ui/) · [Playground](https://zengfukun.github.io/sycee-ui/playground/) · [Changelog](./CHANGELOG.md) · [Sponsor ♥](https://github.com/sponsors/zengfukun)
+[Documentation](https://midi-zeng.github.io/sycee-ui/) · [Playground](https://midi-zeng.github.io/sycee-ui/playground/) · [Changelog](./CHANGELOG.md) · [Sponsor ♥](https://github.com/sponsors/midi-zeng)
 
 </div>
 
@@ -103,7 +103,7 @@ Don't forget: `import '@sycee-ui/vue/styles.css'`.
 
 Full docs with live demos for **both frameworks** and an in-browser playground:
 
-**[zengfukun.github.io/sycee-ui](https://zengfukun.github.io/sycee-ui/)**
+**[midi-zeng.github.io/sycee-ui](https://midi-zeng.github.io/sycee-ui/)**
 
 ## Development
 
@@ -127,7 +127,7 @@ Run `pnpm changeset` to describe your change; the release workflow opens a
 ## Sponsor
 
 Sycee UI is MIT-licensed and free forever. If it saves you time, consider
-[sponsoring the project ♥](https://github.com/sponsors/zengfukun).
+[sponsoring the project ♥](https://github.com/sponsors/midi-zeng).
 
 ## License
 
