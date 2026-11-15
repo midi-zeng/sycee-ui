@@ -1,6 +1,6 @@
 {
   "name": "@sycee-ui/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sycee UI for React — a unified design system with first-class React components. Pairs with @sycee-ui/vue.",
   "license": "MIT",
   "type": "module",
