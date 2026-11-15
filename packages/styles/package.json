@@ -1,6 +1,6 @@
 {
   "name": "@sycee-ui/styles",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Sycee UI design tokens, theming variables and component styles (SCSS source + compiled CSS).",
   "license": "MIT",
   "type": "module",

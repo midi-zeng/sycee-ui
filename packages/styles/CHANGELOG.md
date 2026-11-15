@@ -1,5 +1,11 @@
 # @sycee-ui/styles
 
+## 0.2.1
+
+### Patch Changes
+
+- [`34b7abe`](https://github.com/midi-zeng/sycee-ui/commit/34b7abe3a9a937749e82c959666e8daa8ac92bcd) - Add READMEs for all three packages: installation, quick starts, component tables, imperative API docs and the SCSS token reference.
+
 ## 0.2.0
 
 ### Minor Changes
