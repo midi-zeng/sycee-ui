@@ -132,3 +132,6 @@ Sycee UI is MIT-licensed and free forever. If it saves you time, consider
 ## License
 
 [MIT](./LICENSE) © Sycee UI Contributors
+
+Built-in icon path data is derived from [Lucide](https://lucide.dev) (ISC
+License) — see [NOTICE.md](./NOTICE.md).

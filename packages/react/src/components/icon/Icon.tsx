@@ -1,6 +1,8 @@
 import type { HTMLAttributes, ReactElement } from 'react';
 import { cx } from '../../utils/cx';
 
+// Icon path data is derived from the Lucide icon set (https://lucide.dev,
+// ISC License — see NOTICE.md at the repository root for the full notice).
 export type IconName =
   | 'check'
   | 'close'
