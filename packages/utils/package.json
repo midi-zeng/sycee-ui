@@ -1,6 +1,6 @@
 {
   "name": "@sycee-ui/utils",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Framework-agnostic formatting and utility helpers for Sycee UI.",
   "license": "MIT",
   "type": "module",
