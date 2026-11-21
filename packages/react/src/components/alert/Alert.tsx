@@ -1,6 +1,7 @@
 import { forwardRef, useState } from 'react';
 import type { HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import { Icon } from '../icon/Icon';
 import type { IconName } from '../icon/Icon';
 
@@ -42,6 +43,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
   },
   ref,
 ) {
+  const t = useLocale();
   const [hidden, setHidden] = useState(false);
 
   if (hidden) return null;
@@ -72,7 +74,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
           <button
             type="button"
             className="sy-alert__close"
-            aria-label="Close"
+            aria-label={t.close}
             onClick={handleClose}
           >
             <Icon name="close" />

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 
 const EMPTY_IMAGE = (
   <svg
@@ -35,22 +36,23 @@ const EMPTY_IMAGE = (
 );
 
 export interface EmptyProps extends HTMLAttributes<HTMLDivElement> {
-  /** Description text; can be replaced by children. @default 'No data' */
+  /** Description text; can be replaced by children. Defaults to the active locale. */
   description?: string;
   /** Custom illustration rendered instead of the default one. */
   image?: ReactNode;
 }
 
 export const Empty = forwardRef<HTMLDivElement, EmptyProps>(function Empty(
-  { description = 'No data', image, className, children, ...rest },
+  { description, image, className, children, ...rest },
   ref,
 ) {
+  const t = useLocale();
   return (
     <div ref={ref} className={cx('sy-empty', className)} {...rest}>
       <div className="sy-empty__image" aria-hidden="true">
         {image ?? EMPTY_IMAGE}
       </div>
-      <div className="sy-empty__description">{children ?? description}</div>
+      <div className="sy-empty__description">{children ?? description ?? t.noData}</div>
     </div>
   );
 });

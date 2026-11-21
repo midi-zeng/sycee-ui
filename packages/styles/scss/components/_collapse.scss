@@ -1,0 +1,83 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Collapse
+// ---------------------------------------------------------------------------
+
+.sy-collapse {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--sy-color-border);
+  border-radius: var(--sy-radius-lg);
+  background-color: var(--sy-color-bg);
+  overflow: hidden;
+
+  &__item {
+    border-bottom: 1px solid var(--sy-color-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__header {
+    @include m.sy-control-base;
+
+    width: 100%;
+    justify-content: space-between;
+    gap: var(--sy-space-3);
+    padding: var(--sy-space-4);
+    border-radius: 0;
+    background-color: transparent;
+    color: var(--sy-color-text);
+    font-weight: var(--sy-font-weight-medium);
+    text-align: left;
+    cursor: pointer;
+
+    &:hover:not(.is-disabled) {
+      background-color: var(--sy-color-bg-tertiary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring) inset;
+    }
+
+    .sy-icon {
+      flex-shrink: 0;
+      color: var(--sy-color-text-tertiary);
+      transition: transform var(--sy-duration-base) var(--sy-ease);
+
+      .sy-collapse__item.is-open & {
+        transform: rotate(180deg);
+      }
+    }
+
+    &.is-disabled {
+      cursor: not-allowed;
+      color: var(--sy-color-text-disabled);
+    }
+  }
+
+  // Animated expand/collapse via the grid-rows trick.
+  &__content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--sy-duration-base) var(--sy-ease);
+
+    .sy-collapse__item.is-open & {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  &__body {
+    overflow: hidden;
+    padding: 0 var(--sy-space-4);
+    font-size: var(--sy-font-size-md);
+    color: var(--sy-color-text-secondary);
+
+    .sy-collapse__item.is-open & {
+      padding-bottom: var(--sy-space-4);
+    }
+  }
+}

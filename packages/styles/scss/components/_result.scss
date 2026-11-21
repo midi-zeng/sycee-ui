@@ -1,0 +1,65 @@
+// ---------------------------------------------------------------------------
+// Result
+// ---------------------------------------------------------------------------
+
+.sy-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--sy-space-6) var(--sy-space-4);
+  text-align: center;
+  box-sizing: border-box;
+
+  // Per-status custom properties (info maps to the primary color).
+  --result: var(--sy-color-primary);
+  --result-soft: var(--sy-color-primary-soft);
+
+  &--success {
+    --result: var(--sy-color-success);
+    --result-soft: var(--sy-color-success-soft);
+  }
+
+  &--warning {
+    --result: var(--sy-color-warning);
+    --result-soft: var(--sy-color-warning-soft);
+  }
+
+  &--danger {
+    --result: var(--sy-color-danger);
+    --result-soft: var(--sy-color-danger-soft);
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--sy-radius-full);
+    background-color: var(--result-soft);
+    color: var(--result);
+
+    .sy-icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &__title {
+    margin: var(--sy-space-4) 0 0;
+    font-size: var(--sy-font-size-xl);
+    font-weight: var(--sy-font-weight-semibold);
+    color: var(--sy-color-text);
+  }
+
+  &__description {
+    margin: var(--sy-space-2) 0 0;
+    max-width: 40ch;
+    font-size: var(--sy-font-size-md);
+    color: var(--sy-color-text-secondary);
+  }
+
+  &__extra {
+    margin-top: var(--sy-space-4);
+  }
+}

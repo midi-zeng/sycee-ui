@@ -37,6 +37,7 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
       : undefined;
   const showImg = src !== undefined && !errored;
   const altInitial = (alt ?? '').charAt(0).toUpperCase();
+  const fallbackLabel = !showImg && src !== undefined ? alt : undefined;
 
   return (
     <span
@@ -48,6 +49,8 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(function Avatar(
         className,
       )}
       style={{ ...sizeStyle, ...style }}
+      role={fallbackLabel ? 'img' : undefined}
+      aria-label={fallbackLabel}
       {...rest}
     >
       {showImg ? (

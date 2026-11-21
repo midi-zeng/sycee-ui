@@ -48,6 +48,7 @@ const sizeStyle = computed(() => {
 });
 const showImg = computed(() => src !== undefined && !errored.value);
 const altInitial = computed(() => (alt ?? '').charAt(0).toUpperCase());
+const fallbackLabel = computed(() => (!showImg.value && src !== undefined ? alt : undefined));
 </script>
 
 <template>
@@ -61,6 +62,8 @@ const altInitial = computed(() => (alt ?? '').charAt(0).toUpperCase());
       )
     "
     :style="sizeStyle"
+    :role="fallbackLabel ? 'img' : undefined"
+    :aria-label="fallbackLabel"
   >
     <img v-if="showImg" class="sy-avatar__img" :src="src" :alt="alt" @error="errored = true" />
     <span v-else class="sy-avatar__text" :aria-hidden="src !== undefined ? true : undefined">

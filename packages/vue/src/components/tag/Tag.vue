@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import type { ColorType } from '../../types';
 import Icon from '../icon/Icon.vue';
 
@@ -26,6 +27,7 @@ const {
   closable = false,
   disabled = false,
 } = defineProps<Props>();
+const t = useLocale();
 
 const emit = defineEmits<{ close: [event: MouseEvent] }>();
 
@@ -58,7 +60,7 @@ function handleClose(event: MouseEvent) {
       v-if="closable"
       type="button"
       class="sy-tag__close"
-      aria-label="Remove"
+      :aria-label="t.remove"
       :disabled="disabled"
       @click="handleClose"
     >

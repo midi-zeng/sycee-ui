@@ -2,6 +2,8 @@ import { forwardRef, useCallback, useEffect, useId, useRef, useState } from 'rea
 import type { HTMLAttributes, MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { cx } from '../../utils/cx';
+import { isTopOverlay, registerOverlay } from '../../utils/overlays';
+import { useLocale } from '../../locale';
 import { Button } from '../button/Button';
 import { Icon } from '../icon/Icon';
 
@@ -12,9 +14,9 @@ export interface ModalProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
   title?: ReactNode;
   /** Width of the dialog panel. @default 460 */
   width?: number | string;
-  /** Text of the confirm button. @default 'OK' */
+  /** Text of the confirm button. Defaults to the active locale. */
   okText?: string;
-  /** Text of the cancel button. @default 'Cancel' */
+  /** Text of the cancel button. Defaults to the active locale. */
   cancelText?: string;
   /** Renders the default footer with OK/Cancel buttons. @default true */
   showFooter?: boolean;
@@ -40,38 +42,13 @@ const CLOSE_DURATION = 220;
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-// Module-level scroll lock so nested modals share one `overflow: hidden`.
-let scrollLockCount = 0;
-let scrollLockPreviousOverflow = '';
-
-function lockBodyScroll() {
-  if (typeof document === 'undefined') return;
-  if (scrollLockCount === 0) {
-    scrollLockPreviousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-  }
-  scrollLockCount += 1;
-}
-
-function unlockBodyScroll() {
-  if (typeof document === 'undefined') return;
-  scrollLockCount = Math.max(0, scrollLockCount - 1);
-  if (scrollLockCount === 0) {
-    document.body.style.overflow = scrollLockPreviousOverflow;
-  }
-}
-
-// Stack of open modal ids so Escape only closes the topmost dialog.
-let modalSeed = 0;
-let modalStack: number[] = [];
-
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
   {
     open,
     title,
     width = 460,
-    okText = 'OK',
-    cancelText = 'Cancel',
+    okText,
+    cancelText,
     showFooter = true,
     maskClosable = true,
     closeOnEsc = true,
@@ -88,6 +65,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
   },
   ref,
 ) {
+  const t = useLocale();
   const [closing, setClosing] = useState(false);
   const [hidden, setHidden] = useState(false);
   // Mirrors the `open` prop with a one-frame lag so closing through the prop
@@ -156,16 +134,13 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
   // Scroll lock, focus management and the `open` event while visible.
   useEffect(() => {
     if (!visible) return undefined;
-    const modalId = (modalSeed += 1);
-    modalIdRef.current = modalId;
-    modalStack.push(modalId);
+    const registration = registerOverlay();
+    modalIdRef.current = registration.id;
     restoreFocusRef.current = document.activeElement as HTMLElement | null;
-    lockBodyScroll();
     onOpenRef.current?.();
     panelRef.current?.focus();
     return () => {
-      modalStack = modalStack.filter((entry) => entry !== modalId);
-      unlockBodyScroll();
+      registration.release();
       const previous = restoreFocusRef.current;
       restoreFocusRef.current = null;
       previous?.focus();
@@ -177,7 +152,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
     if (!visible || closing) return undefined;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && closeOnEsc) {
-        if (modalStack[modalStack.length - 1] !== modalIdRef.current) return;
+        if (!isTopOverlay(modalIdRef.current)) return;
         event.stopPropagation();
         initiateClose();
         return;
@@ -253,7 +228,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
           <button
             type="button"
             className="sy-modal__close"
-            aria-label="Close"
+            aria-label={t.close}
             onClick={initiateClose}
           >
             <Icon name="close" />
@@ -265,9 +240,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
             {footer ?? (
               <>
                 <Button variant="ghost" onClick={handleCancel}>
-                  {cancelText}
+                  {cancelText ?? t.cancel}
                 </Button>
-                <Button onClick={handleOk}>{okText}</Button>
+                <Button onClick={handleOk}>{okText ?? t.ok}</Button>
               </>
             )}
           </div>

@@ -1,0 +1,69 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Rate
+// ---------------------------------------------------------------------------
+
+.sy-rate {
+  @include m.sy-control-base;
+
+  gap: var(--sy-space-1);
+  cursor: pointer;
+
+  &__star {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--sy-color-border-strong); // empty star color
+    cursor: inherit;
+    transition:
+      color var(--sy-duration-fast) var(--sy-ease),
+      transform var(--sy-duration-fast) var(--sy-ease);
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-radius: var(--sy-radius-xs);
+      box-shadow: var(--sy-focus-ring);
+    }
+  }
+
+  &__star.is-active {
+    color: var(--sy-color-primary);
+  }
+
+  &.is-readonly,
+  &.is-disabled {
+    cursor: default;
+
+    .sy-rate__star {
+      cursor: inherit;
+
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--sm .sy-rate__star .sy-icon,
+  &.sy-rate--sm .sy-rate__star .sy-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  &--lg .sy-rate__star .sy-icon {
+    width: 24px;
+    height: 24px;
+  }
+}

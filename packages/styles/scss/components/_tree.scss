@@ -1,0 +1,97 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Tree
+// ---------------------------------------------------------------------------
+
+.sy-tree {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--sy-font-size-md);
+
+  &__node {
+    @include m.sy-control-base;
+
+    width: 100%;
+    height: 32px;
+    justify-content: flex-start;
+    gap: var(--sy-space-1);
+    padding: 0 var(--sy-space-2);
+    border-radius: var(--sy-radius-sm);
+    color: var(--sy-color-text);
+    cursor: pointer;
+    text-align: left;
+
+    &:hover {
+      background-color: var(--sy-color-bg-tertiary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+
+    &.is-selected {
+      background-color: var(--sy-color-primary-soft);
+      color: var(--sy-color-primary);
+    }
+
+    &.is-disabled {
+      cursor: not-allowed;
+      color: var(--sy-color-text-disabled);
+      opacity: 0.6;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &__indent {
+    flex-shrink: 0;
+    width: calc(var(--sy-tree-depth, 0) * 16px);
+  }
+
+  &__arrow {
+    @include m.sy-control-base;
+
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    border-radius: var(--sy-radius-xs);
+    color: var(--sy-color-text-tertiary);
+    transition: transform var(--sy-duration-base) var(--sy-ease);
+
+    &:hover {
+      background-color: var(--sy-color-bg-tertiary);
+      color: var(--sy-color-text);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+
+    &.is-expanded {
+      transform: rotate(90deg);
+    }
+
+    &.is-hidden {
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+
+  &__label {
+    @include m.sy-ellipsis;
+
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,69 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Slider
+// ---------------------------------------------------------------------------
+
+.sy-slider {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 28px;
+  cursor: pointer;
+  touch-action: none; // keep pointermove events while dragging
+
+  &__track {
+    position: relative;
+    flex: 1;
+    height: 4px;
+    border-radius: var(--sy-radius-full);
+    background-color: color-mix(in srgb, var(--sy-color-text) 12%, transparent);
+  }
+
+  &__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: var(--sy-radius-full);
+    background-color: var(--sy-color-primary);
+  }
+
+  &__thumb {
+    @include m.sy-control-base;
+
+    position: absolute;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--sy-color-primary);
+    border-radius: var(--sy-radius-full);
+    background-color: var(--sy-color-bg);
+    cursor: grab;
+    transform: translate(-50%, -50%);
+    transition: box-shadow var(--sy-duration-fast) var(--sy-ease);
+
+    &:hover {
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--sy-color-primary) 15%, transparent);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+
+    &:active {
+      cursor: grabbing;
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--sy-color-primary) 15%, transparent);
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    .sy-slider__thumb {
+      cursor: not-allowed;
+    }
+  }
+}

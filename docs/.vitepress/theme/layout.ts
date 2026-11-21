@@ -7,6 +7,7 @@ import ReactDemo from './components/ReactDemo.vue';
 import SponsorCard from './components/SponsorCard.vue';
 import HomeHeroDemo from './components/HomeHeroDemo.vue';
 import HomeSponsor from './components/HomeSponsor.vue';
+import ZhComponentPage from './components/ZhComponentPage.vue';
 
 /**
  * Sycee docs theme: extends VitePress default, adds live-demo components,
@@ -25,6 +26,7 @@ export default {
     app.component('DemoBlock', DemoBlock);
     app.component('ReactDemo', ReactDemo);
     app.component('SponsorCard', SponsorCard);
+    app.component('ZhComponentPage', ZhComponentPage);
   },
   setup() {
     const { isDark } = useData();

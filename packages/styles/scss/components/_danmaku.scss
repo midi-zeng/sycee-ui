@@ -1,0 +1,88 @@
+.sy-danmaku {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid var(--sy-color-border);
+  border-radius: var(--sy-radius-lg);
+  background:
+    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--sy-color-primary) 12%, transparent), transparent 36%),
+    radial-gradient(circle at 84% 68%, color-mix(in srgb, var(--sy-color-success) 10%, transparent), transparent 34%),
+    var(--sy-color-bg-secondary);
+
+  &__stage {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  &__item {
+    position: absolute;
+    top: var(--sy-danmaku-top);
+    left: 100%;
+    width: max-content;
+    max-width: 72%;
+    padding: 4px 10px;
+    border: 1px solid color-mix(in srgb, var(--sy-color-border) 76%, transparent);
+    border-radius: var(--sy-radius-full);
+    background: color-mix(in srgb, var(--sy-color-bg-elevated) 82%, transparent);
+    color: var(--sy-color-text);
+    font: inherit;
+    font-size: var(--sy-font-size-sm);
+    line-height: 1.45;
+    box-shadow: var(--sy-shadow-sm);
+    cursor: pointer;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    animation: sy-danmaku-run var(--sy-danmaku-duration) linear var(--sy-danmaku-delay)
+      var(--sy-danmaku-iterations) both;
+    backdrop-filter: blur(8px);
+
+    &:hover {
+      border-color: color-mix(in srgb, var(--sy-color-primary) 38%, var(--sy-color-border));
+    }
+  }
+
+  &__control {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 2;
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--sy-color-border);
+    border-radius: var(--sy-radius-full);
+    background: var(--sy-color-bg-elevated);
+    color: var(--sy-color-text-secondary);
+    font-size: 10px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+  }
+
+  &.is-paused .sy-danmaku__item {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes sy-danmaku-run {
+  from {
+    left: 100%;
+  }
+
+  to {
+    left: 0;
+    transform: translate(-100%, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sy-danmaku__item {
+    animation-play-state: paused;
+    left: 12px;
+    transform: translateY(-50%);
+  }
+}

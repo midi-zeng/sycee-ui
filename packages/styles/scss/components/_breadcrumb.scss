@@ -1,0 +1,66 @@
+// ---------------------------------------------------------------------------
+// Breadcrumb
+// ---------------------------------------------------------------------------
+
+.sy-breadcrumb {
+  font-size: var(--sy-font-size-sm);
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+
+    // Separator between items, drawn in CSS so it stays out of the a11y tree
+    // (content generated on ::after is ignored by most screen readers).
+    &:not(:last-child)::after {
+      content: '/';
+      margin: 0 var(--sy-space-2);
+      color: var(--sy-color-text-tertiary);
+      user-select: none;
+    }
+  }
+
+  &__link {
+    color: var(--sy-color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--sy-radius-xs);
+    transition: color var(--sy-duration-fast) var(--sy-ease);
+
+    &:hover {
+      color: var(--sy-color-primary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+  }
+
+  &__label {
+    color: var(--sy-color-text-tertiary);
+  }
+
+  &__item.is-current {
+    .sy-breadcrumb__link,
+    .sy-breadcrumb__label {
+      color: var(--sy-color-text);
+      font-weight: var(--sy-font-weight-medium);
+    }
+  }
+
+  &__item.is-disabled {
+    .sy-breadcrumb__link,
+    .sy-breadcrumb__label {
+      color: var(--sy-color-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+}

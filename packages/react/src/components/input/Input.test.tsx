@@ -33,6 +33,17 @@ describe('Input', () => {
     expect(onChange.mock.calls[0][0]).toBe('');
   });
 
+  it('clears an uncontrolled value without a forwarded ref', () => {
+    const onChange = vi.fn();
+    render(<Input clearable defaultValue="Ada" onChange={onChange} aria-label="Name" />);
+    const input = screen.getByLabelText('Name') as HTMLInputElement;
+    fireEvent.focus(input);
+    const clear = document.querySelector('.sy-input__clear')!;
+    fireEvent.click(clear);
+    expect(input.value).toBe('');
+    expect(onChange).toHaveBeenCalledWith('', expect.anything());
+  });
+
   it('marks the root as disabled', () => {
     render(<Input disabled placeholder="x" />);
     const root = screen.getByPlaceholderText('x').parentElement!;

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref, useId, watch } from 'vue';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import type { ComponentSize, InputStatus, SelectOption } from '../../types';
 import Icon from '../icon/Icon.vue';
 
@@ -26,6 +27,7 @@ const {
   clearable = false,
   status = 'default',
 } = defineProps<Props>();
+const t = useLocale();
 
 const emit = defineEmits<{
   change: [value: string | number | null];
@@ -201,13 +203,13 @@ onUnmounted(() => {
     >
       <span :id="valueId" class="sy-select__value">
         <template v-if="hasValue">{{ selectedLabel }}</template>
-        <span v-else class="sy-select__placeholder">{{ placeholder }}</span>
+        <span v-else class="sy-select__placeholder">{{ placeholder ?? t.select }}</span>
       </span>
       <span
         v-if="showClear"
         class="sy-select__clear"
         role="button"
-        aria-label="Clear"
+        :aria-label="t.clear"
         @mousedown.prevent
         @click.stop="handleClear"
       >

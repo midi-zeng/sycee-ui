@@ -1,0 +1,64 @@
+.sy-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--sy-color-text);
+  font-family: var(--sy-font-family);
+  font-size: var(--sy-font-size-xl);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--sy-font-weight-semibold);
+  line-height: 1;
+  letter-spacing: -0.025em;
+
+  &--sm {
+    font-size: var(--sy-font-size-lg);
+  }
+
+  &--lg {
+    font-size: 32px;
+  }
+
+  &__segment {
+    display: inline-flex;
+    min-width: 1.55em;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__separator {
+    color: var(--sy-color-text-tertiary);
+    font-weight: var(--sy-font-weight-regular);
+    padding: 0 2px;
+  }
+
+  &--boxed {
+    gap: var(--sy-space-1);
+
+    .sy-countdown__segment {
+      min-width: 2.2em;
+      height: 1.9em;
+      border: 1px solid color-mix(in srgb, var(--sy-color-border) 78%, transparent);
+      border-radius: var(--sy-radius-md);
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--sy-color-bg) 92%, white), var(--sy-color-bg-secondary));
+      box-shadow:
+        inset 0 -1px 0 color-mix(in srgb, var(--sy-color-border) 72%, transparent),
+        0 3px 8px -5px color-mix(in srgb, var(--sy-color-text) 40%, transparent);
+    }
+
+    .sy-countdown__separator {
+      padding: 0 1px;
+      font-size: 0.8em;
+    }
+  }
+
+  &.is-finished {
+    color: var(--sy-color-text-tertiary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sy-countdown {
+    transition: none;
+  }
+}

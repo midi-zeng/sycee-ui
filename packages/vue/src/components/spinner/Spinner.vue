@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import type { ColorType, ComponentSize } from '../../types';
 
 defineOptions({ name: 'SySpinner' });
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const { size = 'md', color = 'primary', label } = defineProps<Props>();
+const t = useLocale();
 
 const sizeMod = computed(() => (typeof size === 'string' && size !== 'md' ? size : undefined));
 const sizeStyle = computed(() =>
@@ -34,7 +36,7 @@ const sizeStyle = computed(() =>
     "
     :style="sizeStyle"
     role="status"
-    :aria-label="label ?? 'Loading'"
+    :aria-label="label ?? t.loading"
   >
     <span class="sy-spinner__circle" aria-hidden="true" />
     <span v-if="label" class="sy-spinner__label">{{ label }}</span>

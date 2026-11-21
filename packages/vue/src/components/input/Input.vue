@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useAttrs } from 'vue';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import type { ComponentSize, InputStatus } from '../../types';
 import Icon from '../icon/Icon.vue';
 
@@ -29,6 +30,7 @@ const {
   disabled = false,
   readonly = false,
 } = defineProps<Props>();
+const t = useLocale();
 
 const emit = defineEmits<{
   change: [value: string];
@@ -97,7 +99,7 @@ function onClear() {
       v-if="showClear"
       class="sy-input__clear"
       role="button"
-      aria-label="Clear"
+      :aria-label="t.clear"
       @mousedown.prevent
       @click="onClear"
     >

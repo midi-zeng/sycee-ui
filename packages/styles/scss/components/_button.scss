@@ -18,6 +18,13 @@
   font-size: var(--sy-font-size-md);
   font-weight: var(--sy-font-weight-medium);
   white-space: nowrap;
+  letter-spacing: 0.005em;
+  transition:
+    color var(--sy-duration-fast) var(--sy-ease),
+    background-color var(--sy-duration-fast) var(--sy-ease),
+    border-color var(--sy-duration-fast) var(--sy-ease),
+    box-shadow var(--sy-duration-fast) var(--sy-ease),
+    transform var(--sy-duration-fast) var(--sy-ease);
 
   // Per-color custom properties
   --btn: var(--sy-color-primary);
@@ -65,20 +72,34 @@
 
   // Variants
   &--solid {
-    background-color: var(--btn);
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--btn) 88%, white) 0%,
+      var(--btn) 100%
+    );
     color: var(--sy-color-text-inverse);
+    box-shadow: 0 1px 2px color-mix(in srgb, var(--btn) 28%, transparent);
 
     &:hover:not(:disabled) {
       background-color: var(--btn-hover);
+      box-shadow: 0 5px 16px -6px color-mix(in srgb, var(--btn) 58%, transparent);
+      transform: translateY(-1px);
     }
 
     &:active:not(:disabled) {
       background-color: var(--btn-active);
+      background-image: none;
+      box-shadow: none;
+      transform: translateY(0);
     }
   }
 
   &--soft {
-    background-color: var(--btn-soft);
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--btn-soft) 84%, white) 0%,
+      var(--btn-soft) 100%
+    );
     color: var(--btn);
 
     &:hover:not(:disabled) {
@@ -92,12 +113,13 @@
 
   &--outline {
     background-color: transparent;
-    border: 1px solid color-mix(in srgb, var(--btn) 45%, transparent);
+    border: 1px solid color-mix(in srgb, var(--btn) 42%, var(--sy-color-border));
     color: var(--btn);
 
     &:hover:not(:disabled) {
       background-color: var(--btn-soft);
       border-color: var(--btn);
+      box-shadow: var(--sy-shadow-sm);
     }
 
     &:active:not(:disabled) {
@@ -180,8 +202,11 @@
   &:disabled {
     cursor: not-allowed;
     background-color: var(--sy-color-bg-tertiary);
+    background-image: none;
     border-color: transparent;
     color: var(--sy-color-text-disabled);
+    box-shadow: none;
+    transform: none;
 
     &.sy-button--link {
       background-color: transparent;

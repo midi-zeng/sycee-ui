@@ -1,6 +1,7 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import type { ChangeEvent, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import type { ComponentSize, InputStatus } from '../../types';
 import { Icon } from '../icon/Icon';
 
@@ -44,6 +45,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   },
   ref,
 ) {
+  const t = useLocale();
+  const innerRef = useRef<HTMLInputElement>(null);
   const [isHover, setIsHover] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -55,7 +58,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   };
 
   const handleClear = () => {
-    const input = ref && typeof ref !== 'function' ? ref.current : null;
+    const input = innerRef.current;
     if (onChange) {
       // Reuse the native input event so consumers receive a realistic event.
       const synthetic = input
@@ -89,7 +92,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     >
       {prefix ? <span className="sy-input__prefix">{prefix}</span> : null}
       <input
-        ref={ref}
+        ref={(node) => {
+          innerRef.current = node;
+          if (typeof ref === 'function') ref(node);
+          else if (ref) ref.current = node;
+        }}
         className="sy-input__native"
         value={value}
         defaultValue={defaultValue}
@@ -110,7 +117,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         <span
           className="sy-input__clear"
           role="button"
-          aria-label="Clear"
+          aria-label={t.clear}
           onMouseDown={(event) => event.preventDefault()}
           onClick={handleClear}
         >

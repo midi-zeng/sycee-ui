@@ -1,0 +1,35 @@
+// ---------------------------------------------------------------------------
+// Skeleton
+// ---------------------------------------------------------------------------
+
+.sy-skeleton {
+  display: block;
+  background-color: color-mix(in srgb, var(--sy-color-text) 10%, transparent);
+  border-radius: var(--sy-radius-sm);
+
+  &--animated {
+    animation: sy-skeleton-pulse 1.6s ease-in-out infinite;
+  }
+
+  &--circle {
+    border-radius: var(--sy-radius-full);
+  }
+
+  &--text {
+    height: 1em;
+    border-radius: var(--sy-radius-xs);
+    transform: translateY(2px); // optically centers the bar against surrounding text
+  }
+}
+
+@keyframes sy-skeleton-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sy-skeleton--animated {
+    animation: none;
+  }
+}

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useSlots } from 'vue';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import Icon from '../icon/Icon.vue';
 
 defineOptions({ name: 'SyAlert' });
@@ -26,6 +27,7 @@ interface Props {
 }
 
 const { type = 'info', title, showIcon = true, closable = false } = defineProps<Props>();
+const t = useLocale();
 
 const emit = defineEmits<{ close: [event: MouseEvent] }>();
 
@@ -65,7 +67,7 @@ function handleClose(event: MouseEvent) {
         v-if="closable"
         type="button"
         class="sy-alert__close"
-        aria-label="Close"
+        :aria-label="t.close"
         @click="handleClose"
       >
         <Icon name="close" />

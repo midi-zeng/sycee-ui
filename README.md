@@ -39,8 +39,8 @@ Sycee UI takes the best idea from each and applies it to **both** ecosystems:
 
 | Package | Description | Version |
 | --- | --- | --- |
-| [`@sycee-ui/react`](./packages/react) | 25 React components (forwardRef, strict types) | [![npm](https://img.shields.io/npm/v/@sycee-ui/react)](https://www.npmjs.com/package/@sycee-ui/react) |
-| [`@sycee-ui/vue`](./packages/vue) | The same 25 components as Vue 3 SFCs (`v-model`, slots) | [![npm](https://img.shields.io/npm/v/@sycee-ui/vue)](https://www.npmjs.com/package/@sycee-ui/vue) |
+| [`@sycee-ui/react`](./packages/react) | 50 React components (forwardRef, strict types) | [![npm](https://img.shields.io/npm/v/@sycee-ui/react)](https://www.npmjs.com/package/@sycee-ui/react) |
+| [`@sycee-ui/vue`](./packages/vue) | The same 50 components as Vue 3 SFCs (`v-model`, slots) | [![npm](https://img.shields.io/npm/v/@sycee-ui/vue)](https://www.npmjs.com/package/@sycee-ui/vue) |
 | [`@sycee-ui/styles`](./packages/styles) | SCSS design tokens + compiled stylesheet | [![npm](https://img.shields.io/npm/v/@sycee-ui/styles)](https://www.npmjs.com/package/@sycee-ui/styles) |
 
 Requires **React ≥ 18** or **Vue ≥ 3.4**. Both component packages ship the
@@ -93,15 +93,38 @@ Don't forget: `import '@sycee-ui/vue/styles.css'`.
 
 ## Components
 
-25 components, identical in both packages — every docs page shows live demos
+50 components, identical in both packages — every docs page shows live demos
 for React and Vue side by side:
 
 | Category | Components |
 | --- | --- |
-| General | [Button](https://midi-zeng.github.io/sycee-ui/components/button) · [Icon](https://midi-zeng.github.io/sycee-ui/components/icon) · [Card](https://midi-zeng.github.io/sycee-ui/components/card) · [Tag](https://midi-zeng.github.io/sycee-ui/components/tag) · [Avatar](https://midi-zeng.github.io/sycee-ui/components/avatar) · [Badge](https://midi-zeng.github.io/sycee-ui/components/badge) · [Divider](https://midi-zeng.github.io/sycee-ui/components/divider) · [Empty](https://midi-zeng.github.io/sycee-ui/components/empty) · [Space](https://midi-zeng.github.io/sycee-ui/components/space) · [NinePatch](https://midi-zeng.github.io/sycee-ui/components/nine-patch) |
-| Data entry | [Input](https://midi-zeng.github.io/sycee-ui/components/input) · [Textarea](https://midi-zeng.github.io/sycee-ui/components/textarea) · [Select](https://midi-zeng.github.io/sycee-ui/components/select) · [Checkbox](https://midi-zeng.github.io/sycee-ui/components/checkbox) · [Radio](https://midi-zeng.github.io/sycee-ui/components/radio) · [Switch](https://midi-zeng.github.io/sycee-ui/components/switch) |
-| Feedback | [Alert](https://midi-zeng.github.io/sycee-ui/components/alert) · [Message](https://midi-zeng.github.io/sycee-ui/components/message) · [Modal](https://midi-zeng.github.io/sycee-ui/components/modal) · [Tooltip](https://midi-zeng.github.io/sycee-ui/components/tooltip) · [Spinner](https://midi-zeng.github.io/sycee-ui/components/spinner) · [Progress](https://midi-zeng.github.io/sycee-ui/components/progress) |
-| Navigation & data display | [Tabs](https://midi-zeng.github.io/sycee-ui/components/tabs) · [Pagination](https://midi-zeng.github.io/sycee-ui/components/pagination) · [Table](https://midi-zeng.github.io/sycee-ui/components/table) |
+| General | [Button](https://midi-zeng.github.io/sycee-ui/components/button) · [Copy](https://midi-zeng.github.io/sycee-ui/components/copy) · [Watermark](https://midi-zeng.github.io/sycee-ui/components/watermark) · [Icon](https://midi-zeng.github.io/sycee-ui/components/icon) · [Card](https://midi-zeng.github.io/sycee-ui/components/card) · [Tag](https://midi-zeng.github.io/sycee-ui/components/tag) · [Avatar](https://midi-zeng.github.io/sycee-ui/components/avatar) · [Badge](https://midi-zeng.github.io/sycee-ui/components/badge) · [Divider](https://midi-zeng.github.io/sycee-ui/components/divider) · [Empty](https://midi-zeng.github.io/sycee-ui/components/empty) · [Space](https://midi-zeng.github.io/sycee-ui/components/space) · [Skeleton](https://midi-zeng.github.io/sycee-ui/components/skeleton) · [NinePatch](https://midi-zeng.github.io/sycee-ui/components/nine-patch) |
+| Data entry | [Input](https://midi-zeng.github.io/sycee-ui/components/input) · [Textarea](https://midi-zeng.github.io/sycee-ui/components/textarea) · [InputNumber](https://midi-zeng.github.io/sycee-ui/components/input-number) · [Select](https://midi-zeng.github.io/sycee-ui/components/select) · [Checkbox](https://midi-zeng.github.io/sycee-ui/components/checkbox) · [Radio](https://midi-zeng.github.io/sycee-ui/components/radio) · [Switch](https://midi-zeng.github.io/sycee-ui/components/switch) · [Rate](https://midi-zeng.github.io/sycee-ui/components/rate) · [Slider](https://midi-zeng.github.io/sycee-ui/components/slider) · [DatePicker](https://midi-zeng.github.io/sycee-ui/components/date-picker) · [Cascader](https://midi-zeng.github.io/sycee-ui/components/cascader) · [Tree](https://midi-zeng.github.io/sycee-ui/components/tree) · [Upload](https://midi-zeng.github.io/sycee-ui/components/upload) · [Form](https://midi-zeng.github.io/sycee-ui/components/form) |
+| Feedback | [Alert](https://midi-zeng.github.io/sycee-ui/components/alert) · [Message](https://midi-zeng.github.io/sycee-ui/components/message) · [Notification](https://midi-zeng.github.io/sycee-ui/components/notification) · [Modal](https://midi-zeng.github.io/sycee-ui/components/modal) · [Drawer](https://midi-zeng.github.io/sycee-ui/components/drawer) · [Tooltip](https://midi-zeng.github.io/sycee-ui/components/tooltip) · [Popconfirm](https://midi-zeng.github.io/sycee-ui/components/popconfirm) · [Spinner](https://midi-zeng.github.io/sycee-ui/components/spinner) · [Progress](https://midi-zeng.github.io/sycee-ui/components/progress) · [Result](https://midi-zeng.github.io/sycee-ui/components/result) · [Image](https://midi-zeng.github.io/sycee-ui/components/image) |
+| Navigation | [Breadcrumb](https://midi-zeng.github.io/sycee-ui/components/breadcrumb) · [Tabs](https://midi-zeng.github.io/sycee-ui/components/tabs) · [Pagination](https://midi-zeng.github.io/sycee-ui/components/pagination) · [Steps](https://midi-zeng.github.io/sycee-ui/components/steps) · [Dropdown](https://midi-zeng.github.io/sycee-ui/components/dropdown) · [Collapse](https://midi-zeng.github.io/sycee-ui/components/collapse) |
+| Data display | [Table](https://midi-zeng.github.io/sycee-ui/components/table) · [Timeline](https://midi-zeng.github.io/sycee-ui/components/timeline) · [InfiniteScroll](https://midi-zeng.github.io/sycee-ui/components/infinite-scroll) · [Carousel](https://midi-zeng.github.io/sycee-ui/components/carousel) · [Marquee](https://midi-zeng.github.io/sycee-ui/components/marquee) · [Danmaku](https://midi-zeng.github.io/sycee-ui/components/danmaku) |
+| Animation & time | [Countdown](https://midi-zeng.github.io/sycee-ui/components/countdown) |
+
+## Utilities and localization
+
+`@sycee-ui/utils` adds framework-agnostic date, number, currency, percentage,
+relative-time, clamp, debounce, and clipboard helpers including imperative
+`copy(text)`. Both framework packages also export `LocaleProvider`; built-in
+UI copy supports English (`en`, default) and Chinese (`zh`).
+
+## Hooks and composables
+
+Both packages include browser-safe state utilities for common UI patterns:
+`useMounted`, `useDebouncedValue`, `useEventListener`, `useClickOutside`,
+`useMediaQuery`, and `useLocalStorage`. React returns hooks, while Vue returns
+equivalent composables with ref-based values and cleanup tied to component
+scope.
+
+```tsx
+const isWide = useMediaQuery('(min-width: 1024px)');
+const searchRef = useClickOutside<HTMLDivElement>(closeSuggestions);
+const [theme, setTheme] = useLocalStorage('app-theme', 'light');
+```
 
 ## Imperative APIs
 
@@ -151,7 +174,7 @@ so you can import individual token files or bake overrides in at compile time.
 
 ## Features
 
-- **25 components** — one stylesheet, one design language, parallel APIs for
+- **50 components** — one stylesheet, one design language, parallel APIs for
   React 18+ and Vue 3.4+
 - **CSS-variable theming** — re-brand by overriding tokens; dark mode via
   `data-theme="dark"`

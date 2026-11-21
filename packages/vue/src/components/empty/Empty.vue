@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 
 defineOptions({ name: 'SyEmpty' });
 
 interface Props {
-  /** Description text; can be replaced by the default slot. @default 'No data' */
+  /** Description text; can be replaced by the default slot. Defaults to the active locale. */
   description?: string;
 }
 
-const { description = 'No data' } = defineProps<Props>();
+const { description } = defineProps<Props>();
+const t = useLocale();
 </script>
 
 <template>
@@ -47,7 +49,7 @@ const { description = 'No data' } = defineProps<Props>();
       </slot>
     </div>
     <div class="sy-empty__description">
-      <slot>{{ description }}</slot>
+      <slot>{{ description ?? t.noData }}</slot>
     </div>
   </div>
 </template>

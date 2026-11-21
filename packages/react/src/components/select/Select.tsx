@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useId, useRef, useState } from 'react';
 import type { HTMLAttributes, KeyboardEvent } from 'react';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import type { ComponentSize, InputStatus } from '../../types';
 import { Icon } from '../icon/Icon';
 
@@ -18,6 +19,7 @@ export interface SelectProps
   /** Initial value when uncontrolled. @default null */
   defaultValue?: string | number | null;
   options: SelectOption[];
+  /** Placeholder shown without a value; defaults to the active locale. */
   placeholder?: string;
   /** @default 'md' */
   size?: ComponentSize;
@@ -50,6 +52,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
   },
   ref,
 ) {
+  const t = useLocale();
   const [internalValue, setInternalValue] = useState<string | number | null>(defaultValue);
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -192,13 +195,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select(
         onKeyDown={handleTriggerKeyDown}
       >
         <span className="sy-select__value" id={valueId}>
-          {hasValue ? selectedLabel : <span className="sy-select__placeholder">{placeholder}</span>}
+          {hasValue ? selectedLabel : <span className="sy-select__placeholder">{placeholder ?? t.select}</span>}
         </span>
         {clearable && hasValue && !disabled ? (
           <span
             className="sy-select__clear"
             role="button"
-            aria-label="Clear"
+            aria-label={t.clear}
             onMouseDown={(event) => event.preventDefault()}
             onClick={(event) => {
               event.stopPropagation();

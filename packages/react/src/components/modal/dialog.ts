@@ -1,6 +1,7 @@
 import { createElement } from 'react';
 import type { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { LocaleProvider, detectLocale, getLocaleMessages } from '../../locale';
 import { Button } from '../button/Button';
 import { Modal } from './Modal';
 
@@ -9,9 +10,9 @@ export interface DialogConfig {
   title?: ReactNode;
   /** Body content. */
   content?: ReactNode;
-  /** Text of the confirm button. @default 'OK' */
+  /** Text of the confirm button. Defaults to the active locale. */
   okText?: string;
-  /** Text of the cancel button; confirm only. @default 'Cancel' */
+  /** Text of the cancel button; confirm only. Defaults to the active locale. */
   cancelText?: string;
   /** Width of the dialog panel; numbers become px. @default 460 */
   width?: number | string;
@@ -78,37 +79,37 @@ function handleOk(record: DialogRecord) {
 
 function renderRecord(record: DialogRecord) {
   const { config, mode } = record;
-  record.root.render(
-    createElement(
-      Modal,
-      {
-        open: record.open,
-        title: config.title,
-        width: config.width,
-        okText: config.okText,
-        cancelText: config.cancelText,
-        maskClosable: config.maskClosable,
-        closeOnEsc: config.closeOnEsc,
-        onOk: () => handleOk(record),
-        // Covers every dismissal (cancel button, close button, mask, Escape);
-        // the OK path closes through the prop and never fires `onClose`.
-        onClose: () => {
-          config.onCancel?.();
-          startRemove(record);
-        },
-        // `alert` replaces the default OK/Cancel footer with a single button.
-        footer:
-          mode === 'alert'
-            ? createElement(
-                Button,
-                { variant: 'solid', onClick: () => handleOk(record) },
-                config.okText ?? 'OK',
-              )
-            : undefined,
+  const locale = detectLocale();
+  const modal = createElement(
+    Modal,
+    {
+      open: record.open,
+      title: config.title,
+      width: config.width,
+      okText: config.okText,
+      cancelText: config.cancelText,
+      maskClosable: config.maskClosable,
+      closeOnEsc: config.closeOnEsc,
+      onOk: () => handleOk(record),
+      // Covers every dismissal (cancel button, close button, mask, Escape);
+      // the OK path closes through the prop and never fires `onClose`.
+      onClose: () => {
+        config.onCancel?.();
+        startRemove(record);
       },
-      config.content,
-    ),
+      // `alert` replaces the default OK/Cancel footer with a single button.
+      footer:
+        mode === 'alert'
+          ? createElement(
+              Button,
+              { variant: 'solid', onClick: () => handleOk(record) },
+              config.okText ?? getLocaleMessages(locale).ok,
+            )
+          : undefined,
+    },
+    config.content,
   );
+  record.root.render(createElement(LocaleProvider, { locale }, modal));
 }
 
 function show(mode: DialogRecord['mode'], config: DialogConfig): DialogHandle {

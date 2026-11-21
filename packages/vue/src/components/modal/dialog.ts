@@ -1,5 +1,6 @@
 import { createVNode, render } from 'vue';
 import type { VNode } from 'vue';
+import { LocaleProvider, detectLocale, getLocaleMessages } from '../../locale';
 import Button from '../button/Button.vue';
 import Modal from './Modal.vue';
 
@@ -8,9 +9,9 @@ export interface DialogConfig {
   title?: string;
   /** Body content; accepts a string or a VNode. */
   content?: string | VNode;
-  /** Text of the confirm button. @default 'OK' */
+  /** Text of the confirm button. Defaults to the active locale. */
   okText?: string;
-  /** Text of the cancel button; confirm only. @default 'Cancel' */
+  /** Text of the cancel button; confirm only. Defaults to the active locale. */
   cancelText?: string;
   /** Width of the dialog panel; numbers become px. @default 460 */
   width?: number | string;
@@ -76,6 +77,7 @@ function handleOk(record: DialogRecord) {
 
 function renderRecord(record: DialogRecord) {
   const { config, mode } = record;
+  const locale = detectLocale();
   const children: Record<string, () => VNode | string | undefined> = {
     default: () => config.content,
   };
@@ -85,12 +87,11 @@ function renderRecord(record: DialogRecord) {
       createVNode(
         Button,
         { variant: 'solid', onClick: () => handleOk(record) },
-        () => config.okText ?? 'OK',
+        () => config.okText ?? getLocaleMessages(locale).ok,
       );
   }
-  render(
-    createVNode(
-      Modal,
+  const modal = createVNode(
+    Modal,
       {
         open: record.open,
         title: config.title,
@@ -117,8 +118,10 @@ function renderRecord(record: DialogRecord) {
           if (!value) startRemove(record);
         },
       },
-      children,
-    ),
+    children,
+  );
+  render(
+    createVNode(LocaleProvider, { locale }, { default: () => modal }),
     record.container,
   );
 }

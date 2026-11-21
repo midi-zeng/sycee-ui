@@ -29,7 +29,8 @@ The complete list of available `IconName` values:
 
 `check`, `close`, `chevron-down`, `chevron-up`, `chevron-left`,
 `chevron-right`, `info`, `success`, `warning`, `danger`, `search`, `eye`,
-`eye-off`.
+`eye-off`, `plus`, `minus`, `star`, `calendar`, `upload`, `file`, `folder`,
+`copy`.
 
 <DemoBlock :vue-demo="BasicVue" :vue-code="basicVueCode" :react-demo="BasicTsx" :react-code="basicTsxCode" />
 

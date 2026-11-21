@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FunctionalComponent, VNodeChild } from 'vue';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import type { TableColumn } from '../../types';
 import Spinner from '../spinner/Spinner.vue';
 
@@ -34,6 +35,7 @@ const {
   loading = false,
   rowKey,
 } = defineProps<Props>();
+const t = useLocale();
 
 function cellValue(
   row: Record<string, unknown>,
@@ -93,7 +95,7 @@ function widthStyle(column: TableColumnType): { width: string } | undefined {
             <tr>
               <td class="sy-table__td" :colspan="columns.length">
                 <div class="sy-table__empty">
-                  <slot name="empty">No data</slot>
+                  <slot name="empty">{{ t.noData }}</slot>
                 </div>
               </td>
             </tr>

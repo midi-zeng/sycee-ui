@@ -264,6 +264,174 @@ Default size everywhere: `md`. Sizes map to `--sm/--md/--lg` modifiers.
 - A: static container; default slot/children content stays accessible
 - Note: parsing is delegated to the `ninepatch-core` runtime dependency (raw border rules or npTc chunk); the stretchable background is painted by CSS `border-image`, so the block ships no themed styles — only layout baselines in `_nine-patch.scss`
 
+### 7.26 Skeleton
+- P: `width?: number|string`, `height?: number|string`, `shape?: 'rect'|'circle'|'text' (default 'rect')`, `animated?: boolean (true)`
+- C: `.sy-skeleton[.sy-skeleton--circle|--text][.sy-skeleton--animated]` (div, inline width/height)
+- A: `aria-hidden="true"` — purely decorative; pulse animation disabled under `prefers-reduced-motion`
+
+### 7.27 Breadcrumb
+- P: `items?: Array<{ label: ReactNode|string; href?: string; disabled?: boolean }>`
+- C: `nav.sy-breadcrumb[aria-label="Breadcrumb"]` > `ol.sy-breadcrumb__list` > `li.sy-breadcrumb__item[.is-current][.is-disabled]` > `a.sy-breadcrumb__link` or `span.sy-breadcrumb__label`; separator drawn by `li:not(:last-child)::after` (CSS content, outside the a11y tree)
+- A: `aria-label="Breadcrumb"` on nav; current item `aria-current="page"`
+
+### 7.28 Result
+- P: `status?: 'info'|'success'|'warning'|'danger' (default 'info')`, `title?`, `description?`, `icon?`
+- S: default (extra actions below), `icon`/`title`/`description` slots (Vue)
+- C: `.sy-result.sy-result--{status}` > `.sy-result__icon` (64px soft-tinted circle, Icon by status) + `.sy-result__title` + `.sy-result__description` + `.sy-result__extra`
+- A: `role="status"`
+
+### 7.29 Steps
+- P: `items: Array<{ label: ReactNode|string; description?: ReactNode|string; disabled?: boolean }>`, `active?: number (default 0)`, `onChange?: (index)` (React) / `change(index)` emit (Vue)
+- C: `.sy-steps` > `.sy-steps__item[.is-done][.is-active][.is-disabled][.is-clickable]` > `.sy-steps__marker` (number, check Icon when done) + `.sy-steps__body` > `.sy-steps__label` + `.sy-steps__description`; connector line drawn by `item:not(:last-child)::after`
+- A: active item `aria-current="step"`; clickable items are `role="button"` (tabIndex 0) responding to Enter/Space; clickable only when an `onChange` listener exists
+
+### 7.30 Timeline
+- P: `items: Array<{ title: ReactNode|string; description?: ReactNode|string; color?: ColorType (default 'neutral') }>`
+- C: `.sy-timeline` > `.sy-timeline__item.sy-timeline__item--{color}` > `.sy-timeline__dot` + `.sy-timeline__content` > `.sy-timeline__title` + `.sy-timeline__description`; vertical connector drawn by `item:not(:last-child)::before`
+
+### 7.31 Notification (imperative)
+- API: `notification.info(title, content?, duration?)`, `success`, `warning`, `danger`, plus `notification.clear()`. `duration` default 4500ms; `0` disables the auto-close timer.
+- React: factory created at module load — shared `.sy-notification-wrapper` div on body, one React root reused. Vue: `createVNode`/`render` on the same wrapper (array copy per render).
+- C: `.sy-notification-wrapper` (fixed top-right, width 340px, column stack) > `.sy-notification.sy-notification--{type}[.is-closing]` > Icon + `.sy-notification__body` (`.sy-notification__title` + `.sy-notification__content`) + `.sy-notification__close` (button)
+- A: `role="status"`, `aria-live="polite"` on wrapper; close button `aria-label="Close"`
+- Implementation: items auto-remove after duration (exit via `.is-closing` + 200ms); manual close through the button; cap stack at 8 (drop oldest)
+
+### 7.32 Popconfirm
+- P: `title?: string`, `content?: string`, `placement?: 'top'|'bottom'|'left'|'right' (default 'top')`, `okText ('OK')`, `cancelText ('Cancel')`, `danger?: boolean`, `disabled?: boolean`
+- E: confirm, cancel (bubble closes on both; Esc/outside click count as cancel without emitting)
+- S: default (trigger)
+- C: root `.sy-popconfirm` (inline-flex wrapper, click handlers on wrapper) > trigger + (when open) portal `.sy-popconfirm__bubble` (fixed positioning computed from trigger rect, viewport flip like Tooltip) with `.sy-popconfirm__title` + `.sy-popconfirm__description` + `.sy-popconfirm__actions` (ghost sm Cancel + solid sm OK, danger color when `danger`) + `.sy-popconfirm__arrow` (inline-positioned rotated square)
+- A: trigger `aria-expanded`; bubble `aria-labelledby` to title id; Esc closes
+
+### 7.33 Drawer
+- P: `open`/`v-model:open: boolean`, `title?: string`, `placement?: 'right'|'left'|'top'|'bottom' (default 'right')`, `width?: number|string (400, left/right)`, `height?: number|string (320, top/bottom)`, `maskClosable (true)`, `closeOnEsc (true)`
+- E: `open`, `close`
+- S: default (body), `title`
+- C: Portal to body. `.sy-drawer-mask.sy-drawer-mask--{placement}[.is-closing]` > `.sy-drawer.sy-drawer--{placement}` (panel, inline width/height per placement) > `.sy-drawer__header` (`.sy-drawer__title` + `.sy-drawer__close`) + `.sy-drawer__body`. React: mask fade + panel slide via `sy-drawer-{in,out}-{right,left,top,bottom}` keyframes gated by `:not(.sy-drawer-enter-active):not(.sy-drawer-leave-active)`; Vue: `<Transition name="sy-drawer">` (mask opacity + panel `transform` transition) — both class sets live in `_drawer.scss`.
+- A: `role="dialog"`, `aria-modal="true"`, `aria-labelledby` (title id). Esc closes the topmost overlay only; body scroll locked (module-level shared lock); focus moves into the panel on open and returns on close; minimal Tab trap — same mechanics as Modal.
+
+### 7.34 Image
+- P: `src: string`, `alt?: string`, `width?: number|string`, `height?: number|string`, `preview?: boolean (true)`, `errorText?: string ('Preview unavailable')`
+- C: `.sy-image[.is-loading][.is-error][.sy-image--preview]` > `img.sy-image__img` + loading overlay (`.sy-image__overlay` with Spinner), replaced by an error block (`.sy-image__error` with eye-off Icon + errorText) after a load failure; when open, portal `.sy-image-viewer[.is-closing]` (fixed mask, zoom-out cursor) > `.sy-image-viewer__img` + `.sy-image-viewer__close`
+- A: viewer `role="dialog"`, `aria-modal="true"`, `aria-label` from alt; Esc/mask/close button close; focus moves in on open and returns on close. Vue uses `<Transition name="sy-image-viewer">`, React `.is-closing`.
+
+### 7.35 InputNumber
+- P: `value`/`v-model: number | null`, `defaultValue?: number | null`, `min (−Infinity)`, `max (+Infinity)`, `step (1)`, `precision?: number`, `disabled`, `readonly`, `placeholder?`, `size?: ComponentSize`, `status?: InputStatus`, `controls?: boolean (true)`
+- E: change(value)
+- C: `.sy-input-number[.--sm|--lg][.--error|--warning][.is-disabled]` > optional `button.sy-input-number__decrease` (minus Icon) + `input.sy-input-number__native` (type text, inputmode decimal) + optional `button.sy-input-number__increase` (plus Icon)
+- A: input `role="spinbutton"` with `aria-valuemin/max/now`; ArrowUp/Down steps, Enter commits, native spinners hidden via CSS
+- Semantics: typed text stays a draft until blur/Enter, then parses, clamps (`min`/`max`) and rounds to `precision`; step buttons commit immediately
+
+### 7.36 Rate
+- P: `value`/`v-model: number`, `defaultValue (0)`, `max (5)`, `readonly`, `disabled`, `size?: 'sm'|'md'|'lg'`
+- E: change(value)
+- C: `.sy-rate[.--sm|--lg][.is-readonly][.is-disabled]` (role="slider", `aria-valuemin/max/now`, tabIndex 0 when interactive) > buttons `.sy-rate__star[.is-active]` (star Icon, empty stars colored via border-strong token)
+- A: Arrow keys change the value; hover previews (`hoverValue`) without committing; stars carry `aria-label="Rate N of max"`
+
+### 7.37 Slider
+- P: `value`/`v-model: number`, `defaultValue (0)`, `min (0)`, `max (100)`, `step (1)`, `disabled`
+- E: change(value)
+- C: `.sy-slider[.is-disabled]` > `.sy-slider__track` > `.sy-slider__fill` (width %) + `.sy-slider__thumb` (left %, role="slider", `aria-valuemin/max/now`, `aria-busy` while dragging, tabIndex 0)
+- A: pointer drag via pointer capture on the root (`touch-action: none`); keyboard Arrow/Page/Home/End; values snap to `step` and clamp to `[min, max]`
+
+### 7.38 Form / FormItem
+- Form P: `model?: Record<string, unknown>`, `rules?: Record<string, FormRule[]>`, `labelWidth?: number|string`, `labelPosition?: 'left'|'top' (default 'left')`
+- Form C: `.sy-form[.sy-form--top]` (flex column, gap) — renders `form` element with `@submit.prevent`
+- Form API: `validate(): Promise<boolean>` — Vue `defineExpose`, React `useImperativeHandle` (`FormHandle`); FormItems self-register (provide/inject in Vue, Context in React) and unregister on unmount
+- FormItem P: `prop?: string` (model key), `label?: string|ReactNode`, `required?: boolean`, `rules?: FormRule[]`
+- FormItem C: `.sy-form-item[.is-error]` > `.sy-form-item__label` (inline width from `labelWidth`, `.sy-form-item__asterisk` when required) + `.sy-form-item__control` (slot) + `.sy-form-item__error[role="alert"]`
+- Rule shape: `{ required?: boolean; message?: string; validator?: (value) => boolean | string | Promise<boolean | string> }`; `required` rejects null/undefined/''/[]; empty check `isEmptyValue`, runner `runRule`; item rules override form rules for the same key; an explicit `required` prop injects a required rule
+- Validation timing: rules run on `validate()` and re-run on model changes once the item was touched (blur/focusout)
+- A: error text `role="alert"`
+
+### 7.39 Collapse / CollapseItem
+- Collapse P: `openKeys?: Array<string|number>` (React controlled) / `v-model` (Vue, Array), `defaultOpenKeys?: Array (default [])`, `accordion?: boolean (false)`
+- Collapse E: openChange (Vue) / `onOpenChange` (React)
+- CollapseItem P: `name: string|number`, `title?: string|ReactNode`, `disabled?: boolean`
+- C: `.sy-collapse` > `.sy-collapse__item[.is-open][.is-disabled]` > `button.sy-collapse__header[aria-expanded][aria-controls]` (title + chevron-down Icon rotating when open) + `.sy-collapse__content` (grid-template-rows 0fr→1fr animation) > `.sy-collapse__body`
+- A: content `role="region"` labelled by header id; item must be rendered inside a Collapse (throws otherwise); Vue shares state via provide/inject (`collapse/context.ts`), React via Context
+
+### 7.40 Dropdown
+- P: `options?: Array<{ label; value?; disabled?; divider? }>`, `defaultOpen (false)`, `open? (React controlled)`, `disabled`
+- E: select(value) (value defaults to label), openChange (Vue) / `onOpenChange` (React)
+- S: default (trigger)
+- C: root `.sy-dropdown` (inline-flex, click on wrapper) > trigger + (when open) portal `.sy-dropdown__menu[role="menu"]` (fixed under trigger, flips up when the viewport bottom would overflow) > buttons `.sy-dropdown__item[role="menuitem"][.is-disabled]` or `span.sy-dropdown__item--divider`
+- A: trigger `aria-haspopup="menu"` + `aria-expanded`; Esc/outside mousedown close; item click selects and closes
+
+### 7.41 DatePicker
+- P: `value`/`v-model: string | null` (ISO `YYYY-MM-DD`), `defaultValue?: string | null`, `min?: string`, `max?: string`, `weekStartsOn?: 0|1 (default 0)`, `disabled`, `placeholder ('Select date')`, `size?: ComponentSize`, `status?: InputStatus`
+- C: trigger `.sy-date-picker[.--sm|--lg][.--error|--warning][.is-disabled][.is-open]` (field base, value or placeholder + calendar Icon) + portal `.sy-date-picker__panel` (fixed, flips up) > `__panel-header` (prev/next month nav + `__panel-title` `YYYY – MM`) + `__panel-weekdays` (7 labels) + `__panel-grid` (6×7 `__panel-day` buttons)
+- A: grid `role="grid"`, days `role="gridcell"` with `aria-selected` and ISO `aria-label`; outside days dimmed (`.is-outside`), today outlined (`.is-today`), selected filled (`.is-selected`); days outside `min`/`max` disabled; Esc/outside click close; reopening centers on the selection
+- Note: date math uses local-time helpers in the component file (`parseISO`/`formatISO`/`addMonths`/`buildGrid`)
+
+### 7.42 Cascader
+- P: `value`/`v-model: Array<string|number> | null` (root→leaf path), `defaultValue?: path | null`, `options: Array<{ label: string; value: string|number; children?; disabled? }>`, `clearable?: boolean`, `disabled`, `placeholder ('Select')`, `size?: ComponentSize`, `status?: InputStatus`
+- C: trigger `.sy-cascader[.…same modifiers as DatePicker]` (path labels joined by ' / ' + chevron; optional `.sy-cascader__clear` button) + portal `.sy-cascader__panel` (fixed, flex row) > `ul.sy-cascader__panel-column[role="listbox"]` per level > buttons `.sy-cascader__panel-option[role="option"][.is-active][.is-disabled]` (chevron-right on branches)
+- Semantics: branch click expands the next column; leaf click commits the path and closes; opening resets columns to the top level; Esc/outside click close
+
+### 7.43 Tree
+- P: `data: TreeNodeData[]` (`{ key; label: string; children?; disabled? }`), `checkable?: boolean (false)`, `selectable?: boolean (true)`, `defaultExpandedKeys/expandedKeys?: Array<key>`, `defaultCheckedKeys/checkedKeys?: Array<key>`, `defaultSelectedKey/selectedKey?: key | null`
+- E: expandedChange(keys), checkedChange(keys), select(key) (Vue emits; React `onExpandedChange`/`onCheckedChange`/`onSelect`)
+- C: `.sy-tree[role="tree"]` > (recursive) `.sy-tree__node[role="treeitem"][.is-selected][.is-disabled]` (depth via `--sy-tree-depth` → `.sy-tree__indent` width) > `button.sy-tree__arrow[.is-expanded][.is-hidden]` (chevron-right) + optional `input[type=checkbox].sy-tree__checkbox.sy-checkbox__native` + `.sy-tree__label`; expanded children in `.sy-tree__group[role="group"]`
+- Semantics: checking a node cascades to all descendants; a parent displays checked when all enabled children are checked, otherwise indeterminate (`element.indeterminate`)
+- A: treeitem `aria-expanded` (branch only), `aria-selected`, `aria-checked` (`mixed` when indeterminate); keyboard Enter/Space selects, ArrowRight/Left expand/collapse; Vue renders recursion via `tree/TreeItem.vue` with provide/inject (`tree/context.ts`)
+
+### 7.44 Upload
+- P: `fileList`/`v-model: UploadFile[]` (`{ uid; name; size?; status: 'uploading'|'success'|'error' }`), `defaultValue?: UploadFile[]`, `multiple?: boolean`, `accept?: string`, `maxCount?: number`, `drag?: boolean`, `disabled`, `beforeUpload?: (file: File) => boolean|Promise<boolean>`, `request?: (options: { file; onSuccess; onError }) => void`
+- E: change(files), remove(file), error(file) (Vue); `onChange`/`onRemove` (React)
+- C: `.sy-upload[.sy-upload--drag][.is-dragover][.is-disabled]` > hidden `input[type=file].sy-upload__input` (aria-hidden) + trigger (`.sy-upload__trigger` button or drag `role="button"` area with upload Icon) + `.sy-upload__list` > `.sy-upload__item[.is-uploading|.is-success|.is-error]` (file Icon + `.sy-upload__name` + `.sy-upload__status` (Spinner / success / danger Icon) + `.sy-upload__remove` button)
+- Semantics: entries start as `uploading`; default `request` marks success immediately (no transport); `beforeUpload` returning false rejects the file; exceeding `maxCount` ignores extra files; re-selecting the same file re-fires change (input value reset)
+- A: hidden input is `aria-hidden`/non-focusable; status spans carry `aria-label` with the status; remove buttons `aria-label="Remove <name>"`
+
+### 7.45 Countdown
+- P: `target: number|string|Date`, `format?: string ('DD:HH:mm:ss')`, `size?: ComponentSize`, `boxed?: boolean`, `label?: string`
+- E: finish (Vue) / `onFinish` (React), fired once when the remaining time reaches zero
+- C: `.sy-countdown[.--sm|.--lg][.--boxed][.is-finished]` > `.sy-countdown__segment` per date token and `.sy-countdown__separator` for literal pattern text
+- A: root `role="timer"`; the optional `label` supplies the accessible name; separators are `aria-hidden`
+- Tokens: `DD`, `HH`, `mm`, `ss`, and single-digit `D`, `H`, `m`, `s`. Timers start on mount so SSR builds do not retain active intervals.
+
+### 7.46 Carousel
+- P: `items: CarouselItem[]` (`{ key?; content; ariaLabel? }`), `active?/v-model:active`, `defaultActive (0)`, `autoplay (true)`, `interval (4500)`, `loop (true)`, `pauseOnHover (true)`, `showArrows (true)`, `showIndicators (true)`, `height?`
+- E: change(index) (Vue) / `onChange` (React)
+- C: `.sy-carousel[role="region"][aria-roledescription="carousel"]` > `.sy-carousel__viewport` > `.sy-carousel__track` > `.sy-carousel__slide[.is-active]` + `__arrow--prev/next` + `__indicators` > `__indicator[.is-active]`
+- A: focusable carousel; ArrowLeft/Right, Home and End navigate; slide labels default to `1 / N`; inactive slides are `aria-hidden`; autoplay pauses on hover and under reduced motion
+
+### 7.47 Danmaku
+- P: `items: DanmakuItem[]` (`{ id?; content; color?; speed?; delay?; track? }`), `height (180)`, `tracks (4)`, `speed (12)`, `paused?`/`v-model:paused`, `defaultPaused (false)`, `loop (true)`, `showControls (false)`
+- E: itemClick(item,index) (Vue) / `onItemClick` (React)
+- C: `.sy-danmaku[.is-paused]` > `.sy-danmaku__stage` > `button.sy-danmaku__item` (CSS variables for lane, duration, delay and iterations) + optional `.sy-danmaku__control`
+- A: root is a `role="log"` region; paused state becomes polite; reduced motion freezes comments in place; every comment is a real focusable button
+
+### 7.48 Marquee
+- P: `direction?: 'left'|'right'|'up'|'down' (left)`, `duration (18 seconds)`, `pauseOnHover (true)`, `fade (true)`, `gap ('48px')`
+- S: default (React: children)
+- C: `.sy-marquee.sy-marquee--{direction}[.sy-marquee--pause-on-hover][.sy-marquee--fade]` > `.sy-marquee__motion` > two `.sy-marquee__group` copies for seamless looping; the second copy is `aria-hidden`
+- A: hover pause and reduced-motion pause; duplicated content is omitted from the accessibility tree
+
+### 7.49 Copy
+- P: `text: string`, `label?`, `copiedLabel?`, `errorLabel?`, `color?: ColorType (neutral)`, `variant?: BorderType (ghost)`, `size?: ComponentSize (md)`, `type?: 'button'|'submit'|'reset' (button)`, `iconOnly (false)`, `duration (2000)`, `disabled`
+- E: copied(text) / `onCopied` (React), copyError(error) / `onCopyError` (React)
+- C: `button.sy-copy.sy-button.sy-button--{color}.sy-button--{variant}[.sy-button--sm|lg][.sy-copy--icon-only][.is-copied|.is-error]` > `.sy-copy__icon` (copy, check or danger Icon) + `.sy-copy__label` (`role="status"`, visually hidden when `iconOnly`)
+- A: native button semantics and keyboard activation; accessible name follows the current label for icon-only usage; success/error labels are announced politely; feedback resets after `duration` unless it is `0`
+- Clipboard: use `navigator.clipboard.writeText` when available, then fall back to a temporary textarea + `document.execCommand('copy')`; restore the previously focused element after fallback
+- Imperative API: `copy(text, { onSuccess?, onError? }) => Promise<boolean>` resolves false on failure and never rejects from clipboard access; `copyText(text)` is the throwing low-level primitive
+
+### 7.50 InfiniteScroll
+- P: `loading? (false)`, `finished? (false)`, `error? (false)`, `disabled? (false)`, `distance? (120)`, `height?: number|string`
+- E: loadMore (Vue) / `onLoadMore` (React); the built-in retry button emits the same event
+- S: default (list content), `loading`, `finished`, `error` (React: `loadingContent`, `finishedContent`, `errorContent`)
+- C: `.sy-infinite-scroll[.sy-infinite-scroll--contained][.is-loading][.is-error][.is-finished][.is-disabled]` > `.sy-infinite-scroll__content` + `.sy-infinite-scroll__footer` > optional `.sy-infinite-scroll__status[role="status"|"alert"]` + `.sy-infinite-scroll__sentinel` (aria-hidden)
+- Behavior: observes the sentinel with `IntersectionObserver` and fires `loadMore` once per intersection cycle; `distance` is the bottom `rootMargin` in pixels. A supplied `height` makes the root the scroll container; otherwise the viewport is observed.
+- State: loading, finished, error and disabled all suspend observation while true. When loading changes back to false, observation is re-created so another page can load if the sentinel is still visible. Without `IntersectionObserver`, scroll/resize detection is used as a fallback.
+- Status: loading shows an inline Spinner and locale copy; error shows locale copy and a focusable retry button; finished shows locale copy. `aria-busy` reflects `loading`.
+
+### 7.51 Localization and utilities
+- `LocaleProvider` (React/Vue) accepts `locale: 'en'|'zh'` and optional `messages` overrides. No provider means English.
+- Built-in component labels, placeholders, empty states and accessibility copy resolve through the provider; examples include close, clear, remove, pagination, loading, date placeholders, upload states and carousel controls.
+- `@sycee-ui/utils` is framework-agnostic and re-exported by both component packages.
+- Utilities: `formatDate`, `formatDateTime`, `formatRelativeTime`, `formatNumber`, `formatCurrency`, `formatPercent`, `clamp`, `debounce` and browser-only `copy` / `copyText`.
+- Date token output is deterministic; invalid dates throw `RangeError`. Non-finite numeric formatting returns `—`.
+
 ---
 
 ## 8. SCSS notes (styles package — maintained by integrator)

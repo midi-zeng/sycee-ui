@@ -1,0 +1,77 @@
+// ---------------------------------------------------------------------------
+// Timeline
+// ---------------------------------------------------------------------------
+
+.sy-timeline {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    position: relative;
+    display: flex;
+    gap: var(--sy-space-3);
+    padding-bottom: var(--sy-space-5);
+
+    // Vertical connector between dots.
+    &:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      top: 20px; // below the dot
+      left: 4px; // center of the 10px dot (2px line)
+      bottom: 0;
+      width: 2px;
+      background-color: var(--sy-color-border);
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  &__dot {
+    z-index: 1;
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    margin-top: 6px; // aligns with the title's cap height
+    border-radius: var(--sy-radius-full);
+    background-color: var(--sy-color-border-strong);
+    box-shadow: 0 0 0 2px var(--sy-color-bg); // masks the line behind the dot
+
+    // Per-type colors (same pattern as Tag)
+    --timeline-dot: var(--sy-color-neutral);
+
+    .sy-timeline__item--primary & {
+      --timeline-dot: var(--sy-color-primary);
+    }
+
+    .sy-timeline__item--success & {
+      --timeline-dot: var(--sy-color-success);
+    }
+
+    .sy-timeline__item--warning & {
+      --timeline-dot: var(--sy-color-warning);
+    }
+
+    .sy-timeline__item--danger & {
+      --timeline-dot: var(--sy-color-danger);
+    }
+
+    background-color: var(--timeline-dot);
+  }
+
+  &__content {
+    min-width: 0;
+  }
+
+  &__title {
+    font-weight: var(--sy-font-weight-medium);
+    color: var(--sy-color-text);
+  }
+
+  &__description {
+    margin-top: 2px;
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-secondary);
+  }
+}

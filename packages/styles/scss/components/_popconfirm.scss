@@ -1,0 +1,58 @@
+// ---------------------------------------------------------------------------
+// Popconfirm
+// ---------------------------------------------------------------------------
+
+.sy-popconfirm {
+  display: inline-flex;
+  max-width: 100%;
+  font-family: var(--sy-font-family);
+
+  &__bubble {
+    position: fixed;
+    z-index: var(--sy-z-tooltip);
+    width: max-content;
+    max-width: 280px;
+    padding: var(--sy-space-4);
+    border: 1px solid var(--sy-color-border);
+    border-radius: var(--sy-radius-md);
+    background-color: var(--sy-color-bg);
+    box-shadow: var(--sy-shadow-md);
+    animation: sy-popconfirm-in var(--sy-duration-fast) var(--sy-ease);
+  }
+
+  &__title {
+    font-size: var(--sy-font-size-sm);
+    font-weight: var(--sy-font-weight-medium);
+    color: var(--sy-color-text);
+  }
+
+  &__description {
+    margin-top: var(--sy-space-1);
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-secondary);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--sy-space-2);
+    margin-top: var(--sy-space-3);
+  }
+
+  &__arrow {
+    position: fixed;
+    z-index: var(--sy-z-tooltip);
+    width: 8px;
+    height: 8px;
+    background-color: var(--sy-color-bg);
+    box-shadow: 0 0 0 1px var(--sy-color-border) inset;
+    pointer-events: none;
+  }
+}
+
+@keyframes sy-popconfirm-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}

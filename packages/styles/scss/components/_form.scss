@@ -1,0 +1,56 @@
+// ---------------------------------------------------------------------------
+// Form / FormItem
+// ---------------------------------------------------------------------------
+
+.sy-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sy-space-4);
+
+  &--top .sy-form-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sy-space-1);
+
+    .sy-form-item__label {
+      width: auto;
+      justify-content: flex-start;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.sy-form-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sy-space-3);
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: var(--sy-height-md);
+    color: var(--sy-color-text);
+    font-size: var(--sy-font-size-md);
+  }
+
+  &__asterisk {
+    margin-right: 4px;
+    color: var(--sy-color-danger);
+  }
+
+  &__control {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__error {
+    margin-top: var(--sy-space-1);
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-danger);
+  }
+
+  &.is-error .sy-form-item__label {
+    color: var(--sy-color-danger);
+  }
+}

@@ -1,0 +1,224 @@
+// ---------------------------------------------------------------------------
+// Drawer
+// ---------------------------------------------------------------------------
+
+.sy-drawer-mask {
+  position: fixed;
+  inset: 0;
+  z-index: var(--sy-z-modal);
+  display: flex;
+  background-color: var(--sy-color-overlay);
+  animation: sy-fade-in var(--sy-duration-base) var(--sy-ease);
+
+  &--right {
+    justify-content: flex-end;
+  }
+
+  &--left {
+    justify-content: flex-start;
+  }
+
+  &--top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  &--bottom {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+
+  &.is-closing {
+    animation: sy-fade-out var(--sy-duration-base) var(--sy-ease) forwards;
+  }
+}
+
+.sy-drawer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sy-color-bg);
+  box-shadow: var(--sy-shadow-lg);
+
+  // Panels slide from their edge; `transition` backs the Vue <Transition>
+  // hooks, the keyframes back the React enter/exit animations.
+  &--right,
+  &--left {
+    height: 100%;
+    transform: translateX(0);
+    transition: transform var(--sy-duration-base) var(--sy-ease);
+  }
+
+  &--top,
+  &--bottom {
+    width: 100%;
+    transform: translateY(0);
+    transition: transform var(--sy-duration-base) var(--sy-ease);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sy-space-3);
+    padding: var(--sy-space-5) var(--sy-space-6) 0;
+  }
+
+  &__title {
+    font-size: var(--sy-font-size-lg);
+    font-weight: var(--sy-font-weight-semibold);
+    color: var(--sy-color-text);
+  }
+
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-right: calc(var(--sy-space-3) * -1);
+    padding: 0;
+    border: none;
+    border-radius: var(--sy-radius-md);
+    background-color: transparent;
+    color: var(--sy-color-text-tertiary);
+    cursor: pointer;
+    transition:
+      background-color var(--sy-duration-fast) var(--sy-ease),
+      color var(--sy-duration-fast) var(--sy-ease);
+
+    &:hover {
+      background-color: var(--sy-color-bg-tertiary);
+      color: var(--sy-color-text-secondary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+  }
+
+  &__body {
+    flex: 1;
+    padding: var(--sy-space-4) var(--sy-space-6);
+    color: var(--sy-color-text-secondary);
+    overflow-y: auto;
+  }
+}
+
+// React enter/exit animations (per placement).
+.sy-drawer-mask:not(.sy-drawer-enter-active):not(.sy-drawer-leave-active) {
+  .sy-drawer--right {
+    animation: sy-drawer-in-right var(--sy-duration-base) var(--sy-ease);
+  }
+
+  .sy-drawer--left {
+    animation: sy-drawer-in-left var(--sy-duration-base) var(--sy-ease);
+  }
+
+  .sy-drawer--top {
+    animation: sy-drawer-in-top var(--sy-duration-base) var(--sy-ease);
+  }
+
+  .sy-drawer--bottom {
+    animation: sy-drawer-in-bottom var(--sy-duration-base) var(--sy-ease);
+  }
+
+  &.is-closing {
+    .sy-drawer--right {
+      animation: sy-drawer-out-right var(--sy-duration-base) var(--sy-ease) forwards;
+    }
+
+    .sy-drawer--left {
+      animation: sy-drawer-out-left var(--sy-duration-base) var(--sy-ease) forwards;
+    }
+
+    .sy-drawer--top {
+      animation: sy-drawer-out-top var(--sy-duration-base) var(--sy-ease) forwards;
+    }
+
+    .sy-drawer--bottom {
+      animation: sy-drawer-out-bottom var(--sy-duration-base) var(--sy-ease) forwards;
+    }
+  }
+}
+
+// Vue <Transition name="sy-drawer"> class hooks. The mask fades while the
+// panel slides via the `transition` declared on `.sy-drawer--*`.
+.sy-drawer-enter-active,
+.sy-drawer-leave-active {
+  transition: opacity var(--sy-duration-base) var(--sy-ease);
+}
+
+.sy-drawer-enter-from,
+.sy-drawer-leave-to {
+  opacity: 0;
+}
+
+.sy-drawer-enter-from .sy-drawer--right,
+.sy-drawer-leave-to .sy-drawer--right {
+  transform: translateX(100%);
+}
+
+.sy-drawer-enter-from .sy-drawer--left,
+.sy-drawer-leave-to .sy-drawer--left {
+  transform: translateX(-100%);
+}
+
+.sy-drawer-enter-from .sy-drawer--top,
+.sy-drawer-leave-to .sy-drawer--top {
+  transform: translateY(-100%);
+}
+
+.sy-drawer-enter-from .sy-drawer--bottom,
+.sy-drawer-leave-to .sy-drawer--bottom {
+  transform: translateY(100%);
+}
+
+@keyframes sy-drawer-in-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes sy-drawer-out-right {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes sy-drawer-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes sy-drawer-out-left {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes sy-drawer-in-top {
+  from {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes sy-drawer-out-top {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes sy-drawer-in-bottom {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes sy-drawer-out-bottom {
+  to {
+    transform: translateY(100%);
+  }
+}

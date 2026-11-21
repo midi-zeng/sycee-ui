@@ -15,6 +15,7 @@ const names = [
   'search',
   'eye',
   'eye-off',
+  'copy',
 ] as const;
 </script>
 

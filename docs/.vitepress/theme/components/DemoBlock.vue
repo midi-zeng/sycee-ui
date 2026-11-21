@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { watch, ref } from 'vue';
+import { computed, watch, ref } from 'vue';
 import { useData } from 'vitepress';
 import { codeToHtml } from 'shiki';
 import { demoFramework } from '../framework';
+import { useDocsLocale } from '../docsLocale';
+import { LocaleProvider } from '@sycee-ui/vue';
 import ReactDemo from './ReactDemo.vue';
 
 const props = defineProps<{
@@ -17,8 +19,22 @@ const props = defineProps<{
 }>();
 
 const { isDark } = useData();
+const docsLocale = useDocsLocale();
 const showCode = ref(false);
 const highlighted = ref('');
+const labels = computed(() =>
+  docsLocale.value === 'zh'
+    ? {
+        framework: '框架',
+        show: '显示代码',
+        hide: '隐藏代码',
+      }
+    : {
+        framework: 'Framework',
+        show: 'Show code',
+        hide: 'Hide code',
+      },
+);
 
 watch(
   [showCode, demoFramework, () => props.vueCode, () => props.reactCode, isDark],
@@ -39,12 +55,14 @@ watch(
 <template>
   <div class="demo-block">
     <div class="demo-block__preview">
-      <component :is="props.vueDemo" v-if="demoFramework === 'vue' && props.vueDemo" />
-      <ReactDemo v-else-if="props.reactDemo" :demo="props.reactDemo" />
+      <LocaleProvider :locale="docsLocale">
+        <component :is="props.vueDemo" v-if="demoFramework === 'vue' && props.vueDemo" />
+        <ReactDemo v-else-if="props.reactDemo" :demo="props.reactDemo" :locale="docsLocale" />
+      </LocaleProvider>
     </div>
     <div class="demo-block__body">
       <div class="demo-block__toolbar">
-        <div class="demo-tabs" role="tablist" aria-label="Framework">
+        <div class="demo-tabs" role="tablist" :aria-label="labels.framework">
           <button
             class="demo-tabs__tab"
             :class="{ 'is-active': demoFramework === 'vue' }"
@@ -65,7 +83,7 @@ watch(
           </button>
         </div>
         <button class="demo-block__toggle" @click="showCode = !showCode">
-          {{ showCode ? 'Hide code' : 'Show code' }}
+          {{ showCode ? labels.hide : labels.show }}
         </button>
         <span class="demo-block__lang">{{
           demoFramework === 'vue' ? 'Vue 3 · SFC' : 'React 19 · TSX'

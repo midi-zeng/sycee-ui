@@ -1,0 +1,109 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// InputNumber
+// ---------------------------------------------------------------------------
+
+.sy-input-number {
+  @include m.sy-field-base;
+
+  &__decrease,
+  &__increase {
+    @include m.sy-control-base;
+
+    flex-shrink: 0;
+    width: 28px;
+    height: 100%;
+    border-radius: 0;
+    color: var(--sy-color-text-tertiary);
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      color: var(--sy-color-text);
+      background-color: var(--sy-color-bg-tertiary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: none;
+      color: var(--sy-color-primary);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  &__decrease {
+    border-right: 1px solid var(--sy-color-border);
+    border-radius: var(--sy-radius-md) 0 0 var(--sy-radius-md);
+  }
+
+  &__increase {
+    border-left: 1px solid var(--sy-color-border);
+    border-radius: 0 var(--sy-radius-md) var(--sy-radius-md) 0;
+  }
+
+  &__native {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0 var(--sy-space-3);
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--sy-color-text);
+    text-align: center;
+    cursor: inherit;
+
+    &::placeholder {
+      color: var(--sy-color-text-disabled);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    // Hide the native number-input spinners.
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    background-color: var(--sy-color-bg-tertiary);
+    color: var(--sy-color-text-disabled);
+  }
+
+  &--error,
+  &.is-error {
+    border-color: var(--sy-color-danger);
+
+    &:focus-within {
+      border-color: var(--sy-color-danger);
+      box-shadow: var(--sy-focus-ring-danger);
+    }
+  }
+
+  &--warning {
+    border-color: var(--sy-color-warning);
+  }
+
+  &--sm,
+  &.sy-input-number--sm {
+    height: var(--sy-height-sm);
+  }
+
+  &--lg {
+    height: var(--sy-height-lg);
+  }
+}

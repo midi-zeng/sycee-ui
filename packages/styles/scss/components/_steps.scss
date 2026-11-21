@@ -1,0 +1,109 @@
+// ---------------------------------------------------------------------------
+// Steps
+// ---------------------------------------------------------------------------
+
+.sy-steps {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+
+  &__item {
+    position: relative;
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
+    min-width: 0;
+
+    // Connector line from the marker to the next item.
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 14px; // vertical center of the 28px marker
+      left: 40px; // marker width + a small gap
+      right: 0;
+      height: 2px;
+      background-color: var(--sy-color-border);
+      transition: background-color var(--sy-duration-base) var(--sy-ease);
+    }
+
+    &.is-done:not(:last-child)::after,
+    &.is-active:not(:last-child)::after {
+      background-color: var(--sy-color-primary);
+    }
+
+    &.is-clickable {
+      cursor: pointer;
+    }
+  }
+
+  &__marker {
+    z-index: 1; // covers the connector under the marker
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--sy-color-border);
+    border-radius: var(--sy-radius-full);
+    background-color: var(--sy-color-bg);
+    color: var(--sy-color-text-secondary);
+    font-size: var(--sy-font-size-sm);
+    font-weight: var(--sy-font-weight-medium);
+    transition:
+      color var(--sy-duration-fast) var(--sy-ease),
+      background-color var(--sy-duration-fast) var(--sy-ease),
+      border-color var(--sy-duration-fast) var(--sy-ease);
+
+    .sy-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &__item.is-active .sy-steps__marker {
+    border-color: var(--sy-color-primary);
+    background-color: var(--sy-color-primary-soft);
+    color: var(--sy-color-primary);
+  }
+
+  &__item.is-done .sy-steps__marker {
+    border-color: var(--sy-color-primary);
+    background-color: var(--sy-color-primary);
+    color: var(--sy-color-text-inverse);
+  }
+
+  &__body {
+    min-width: 0;
+    margin-left: var(--sy-space-3);
+    padding-bottom: var(--sy-space-4);
+  }
+
+  &__label {
+    display: block;
+    font-weight: var(--sy-font-weight-medium);
+    color: var(--sy-color-text-secondary);
+    transition: color var(--sy-duration-fast) var(--sy-ease);
+
+    .sy-steps__item.is-active & {
+      color: var(--sy-color-primary);
+    }
+
+    .sy-steps__item.is-done & {
+      color: var(--sy-color-text);
+    }
+  }
+
+  &__description {
+    display: block;
+    margin-top: 2px;
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-tertiary);
+  }
+
+  &__item.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,137 @@
+.sy-carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-radius: var(--sy-radius-lg);
+  background: var(--sy-color-bg-secondary);
+  outline: none;
+  isolation: isolate;
+
+  &:focus-visible {
+    box-shadow: var(--sy-focus-ring);
+  }
+
+  &__viewport {
+    position: relative;
+    overflow: hidden;
+    min-height: 160px;
+  }
+
+  &__track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 520ms var(--sy-ease);
+    will-change: transform;
+  }
+
+  &__slide {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    overflow: hidden;
+    opacity: 0.42;
+    transform: scale(0.985);
+    transition:
+      opacity var(--sy-duration-slow) var(--sy-ease),
+      transform var(--sy-duration-slow) var(--sy-ease);
+
+    &.is-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--sy-color-border) 72%, transparent);
+    border-radius: var(--sy-radius-full);
+    background: var(--sy-color-bg-elevated);
+    color: var(--sy-color-text);
+    box-shadow: var(--sy-shadow-md);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.92);
+    transition:
+      opacity var(--sy-duration-base) var(--sy-ease),
+      transform var(--sy-duration-base) var(--sy-ease),
+      background-color var(--sy-duration-fast) var(--sy-ease);
+    backdrop-filter: blur(8px);
+
+    &--prev {
+      left: 12px;
+    }
+
+    &--next {
+      right: 12px;
+    }
+
+    &:hover {
+      background: var(--sy-color-bg);
+      transform: translateY(-50%) scale(1);
+    }
+  }
+
+  &:hover .sy-carousel__arrow,
+  &:focus-within .sy-carousel__arrow {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+
+  &__indicators {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    z-index: 2;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: var(--sy-radius-full);
+    background: color-mix(in srgb, var(--sy-color-bg) 76%, transparent);
+    transform: translateX(-50%);
+    backdrop-filter: blur(10px);
+  }
+
+  &__indicator {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: none;
+    border-radius: var(--sy-radius-full);
+    background: var(--sy-color-text-tertiary);
+    cursor: pointer;
+    transition:
+      width var(--sy-duration-base) var(--sy-ease),
+      background-color var(--sy-duration-base) var(--sy-ease);
+
+    &.is-active {
+      width: 20px;
+      background: var(--sy-color-primary);
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .sy-carousel__arrow {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sy-carousel__track,
+  .sy-carousel__slide,
+  .sy-carousel__indicator {
+    transition-duration: 0.01ms;
+  }
+}

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import { Spinner } from '../spinner/Spinner';
 
 export interface TableColumn {
@@ -29,7 +30,7 @@ export interface TableProps extends HTMLAttributes<HTMLDivElement> {
   loading?: boolean;
   /** Returns the React key of a row; defaults to the row index. */
   rowKey?: (row: Record<string, unknown>, index: number) => string | number;
-  /** Content rendered when the table has no rows. @default 'No data' */
+  /** Content rendered when the table has no rows. Defaults to the active locale. */
   empty?: ReactNode;
 }
 
@@ -41,12 +42,13 @@ export const Table = forwardRef<HTMLDivElement, TableProps>(function Table(
     bordered = false,
     loading = false,
     rowKey,
-    empty = 'No data',
+    empty,
     className,
     ...rest
   },
   ref,
 ) {
+  const t = useLocale();
   return (
     <div
       ref={ref}
@@ -84,7 +86,7 @@ export const Table = forwardRef<HTMLDivElement, TableProps>(function Table(
             {data.length === 0 ? (
               <tr>
                 <td className="sy-table__td" colSpan={columns.length}>
-                  <div className="sy-table__empty">{empty}</div>
+                  <div className="sy-table__empty">{empty ?? t.noData}</div>
                 </td>
               </tr>
             ) : (

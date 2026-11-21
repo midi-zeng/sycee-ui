@@ -5,3 +5,8 @@ packages:
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
+
+overrides:
+  'js-beautify>editorconfig': 4.0.1
+  'js-beautify>glob': 14.0.6
+  'vitepress>vite': 6.4.6

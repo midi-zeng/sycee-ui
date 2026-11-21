@@ -1,0 +1,142 @@
+// ---------------------------------------------------------------------------
+// Image + fullscreen viewer
+// ---------------------------------------------------------------------------
+
+.sy-image {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: var(--sy-radius-md);
+  background-color: var(--sy-color-bg-tertiary);
+
+  &--preview {
+    cursor: zoom-in;
+  }
+
+  &.is-error {
+    cursor: default;
+  }
+
+  &__img {
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
+    transition: opacity var(--sy-duration-base) var(--sy-ease);
+
+    .sy-image.is-loading & {
+      opacity: 0;
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sy-color-text-tertiary);
+  }
+
+  &__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sy-space-2);
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: var(--sy-space-4);
+    overflow-wrap: anywhere;
+    text-align: center;
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-tertiary);
+  }
+}
+
+// Fullscreen viewer
+.sy-image-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--sy-z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sy-color-overlay);
+  cursor: zoom-out;
+  animation: sy-fade-in var(--sy-duration-base) var(--sy-ease);
+
+  &__img {
+    max-width: calc(100vw - var(--sy-space-8));
+    max-height: calc(100vh - var(--sy-space-8));
+    border-radius: var(--sy-radius-md);
+    object-fit: contain;
+    animation: sy-image-zoom-in var(--sy-duration-base) var(--sy-ease);
+  }
+
+  &__close {
+    position: absolute;
+    top: var(--sy-space-4);
+    right: var(--sy-space-4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: var(--sy-radius-md);
+    background-color: transparent;
+    color: var(--sy-color-text-inverse);
+    cursor: pointer;
+    transition: background-color var(--sy-duration-fast) var(--sy-ease);
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--sy-color-text-inverse) 15%, transparent);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+
+    .sy-icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &.is-closing {
+    animation: sy-fade-out var(--sy-duration-base) var(--sy-ease) forwards;
+
+    .sy-image-viewer__img {
+      animation: sy-image-zoom-out var(--sy-duration-base) var(--sy-ease) forwards;
+    }
+  }
+}
+
+// Vue <Transition name="sy-image-viewer"> class hooks
+.sy-image-viewer-enter-active,
+.sy-image-viewer-leave-active {
+  transition: opacity var(--sy-duration-base) var(--sy-ease);
+}
+
+.sy-image-viewer-enter-from,
+.sy-image-viewer-leave-to {
+  opacity: 0;
+}
+
+@keyframes sy-image-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes sy-image-zoom-out {
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}

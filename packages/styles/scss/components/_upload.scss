@@ -1,0 +1,148 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// Upload
+// ---------------------------------------------------------------------------
+
+.sy-upload {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sy-space-2);
+
+  &__trigger {
+    @include m.sy-control-base;
+
+    height: var(--sy-height-md);
+    padding: 0 var(--sy-space-4);
+    gap: var(--sy-space-2);
+    border: 1px dashed var(--sy-color-border-strong);
+    border-radius: var(--sy-radius-md);
+    background-color: var(--sy-color-bg);
+    color: var(--sy-color-text-secondary);
+    cursor: pointer;
+
+    &:hover:not(.is-disabled) {
+      border-color: var(--sy-color-primary);
+      color: var(--sy-color-primary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+  }
+
+  &--drag .sy-upload__trigger {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--sy-space-6);
+    gap: var(--sy-space-2);
+    text-align: center;
+  }
+
+  &.is-dragover .sy-upload__trigger {
+    border-color: var(--sy-color-primary);
+    background-color: var(--sy-color-primary-soft);
+    color: var(--sy-color-primary);
+  }
+
+  &__hint {
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text-tertiary);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sy-space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    @include m.sy-control-base;
+
+    width: 100%;
+    height: var(--sy-height-sm);
+    justify-content: flex-start;
+    gap: var(--sy-space-2);
+    padding: 0 var(--sy-space-3);
+    border-radius: var(--sy-radius-sm);
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text);
+    cursor: default;
+
+    .sy-icon:first-child {
+      flex-shrink: 0;
+      color: var(--sy-color-text-tertiary);
+    }
+
+    &.is-uploading {
+      color: var(--sy-color-text-secondary);
+    }
+
+    &.is-success {
+      .sy-upload__status {
+        color: var(--sy-color-success);
+      }
+    }
+
+    &.is-error {
+      color: var(--sy-color-danger);
+
+      .sy-icon:first-child,
+      .sy-upload__status {
+        color: var(--sy-color-danger);
+      }
+    }
+  }
+
+  &__name {
+    @include m.sy-ellipsis;
+
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__status {
+    flex-shrink: 0;
+    display: inline-flex;
+    color: var(--sy-color-text-tertiary);
+  }
+
+  &__remove {
+    @include m.sy-control-base;
+
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    border-radius: var(--sy-radius-xs);
+    color: var(--sy-color-text-tertiary);
+
+    &:hover {
+      background-color: var(--sy-color-bg-tertiary);
+      color: var(--sy-color-text);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+
+    .sy-icon {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  &.is-disabled {
+    .sy-upload__trigger {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+}

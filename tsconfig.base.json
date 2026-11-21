@@ -3,6 +3,10 @@
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@sycee-ui/utils": ["packages/utils/src/index.ts"]
+    },
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "strict": true,

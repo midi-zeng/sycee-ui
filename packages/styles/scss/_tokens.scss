@@ -53,9 +53,10 @@
 
   // Backgrounds
   --sy-color-bg: #ffffff;
-  --sy-color-bg-secondary: #f7f7fa;
-  --sy-color-bg-tertiary: #f0f1f5;
+  --sy-color-bg-secondary: #f8f8fb;
+  --sy-color-bg-tertiary: #f1f2f6;
   --sy-color-bg-inverse: #1a1c25;
+  --sy-color-bg-elevated: rgba(255, 255, 255, 0.92);
 
   // Borders
   --sy-color-border: #e4e5ec;
@@ -111,9 +112,10 @@
   // Elevation
   --sy-shadow-sm: 0 1px 2px rgba(16, 17, 26, 0.06);
   --sy-shadow-md:
-    0 2px 4px -2px rgba(16, 17, 26, 0.06), 0 4px 12px -2px rgba(16, 17, 26, 0.1);
+    0 2px 4px -2px rgba(16, 17, 26, 0.06), 0 8px 24px -8px rgba(16, 17, 26, 0.14);
   --sy-shadow-lg:
-    0 4px 8px -4px rgba(16, 17, 26, 0.08), 0 16px 40px -12px rgba(16, 17, 26, 0.18);
+    0 4px 8px -4px rgba(16, 17, 26, 0.08), 0 24px 56px -16px rgba(16, 17, 26, 0.22);
+  --sy-shadow-brand: 0 10px 30px -12px color-mix(in srgb, var(--sy-color-primary) 55%, transparent);
 
   // Focus
   --sy-focus-ring: 0 0 0 3px color-mix(in srgb, var(--sy-color-primary) 26%, transparent);
@@ -124,6 +126,7 @@
   --sy-duration-base: 200ms;
   --sy-duration-slow: 320ms;
   --sy-ease: cubic-bezier(0.2, 0, 0, 1);
+  --sy-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   // Z-index scale
   --sy-z-dropdown: 1000;
@@ -181,6 +184,7 @@
   --sy-color-bg-secondary: #1b1d24;
   --sy-color-bg-tertiary: #23262f;
   --sy-color-bg-inverse: #eef0f6;
+  --sy-color-bg-elevated: rgba(27, 29, 36, 0.94);
 
   --sy-color-border: #2c2e38;
   --sy-color-border-strong: #434655;

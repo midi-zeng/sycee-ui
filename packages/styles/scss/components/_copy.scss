@@ -1,0 +1,55 @@
+// ---------------------------------------------------------------------------
+// Copy
+// Reuses Button's control, color, variant, and size classes. This file only
+// adds the icon-only geometry, feedback color, and accessible hidden label.
+// ---------------------------------------------------------------------------
+
+.sy-copy {
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    transition: color var(--sy-duration-fast) var(--sy-ease);
+  }
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  &__label--hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  &--icon-only {
+    width: var(--sy-height-md);
+    padding: 0;
+    justify-content: center;
+  }
+
+  &--icon-only.sy-button--sm {
+    width: var(--sy-height-sm);
+  }
+
+  &--icon-only.sy-button--lg {
+    width: var(--sy-height-lg);
+  }
+
+  &.is-copied &__icon {
+    color: var(--sy-color-success);
+  }
+
+  &.is-error &__icon {
+    color: var(--sy-color-danger);
+  }
+}

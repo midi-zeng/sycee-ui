@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes } from 'react';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import type { ColorType, ComponentSize } from '../../types';
 
 export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
@@ -16,6 +17,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(function Spinner
   { size = 'md', color = 'primary', label, className, style, ...rest },
   ref,
 ) {
+  const t = useLocale();
   const sizeMod = typeof size === 'string' && size !== 'md' ? size : undefined;
   const sizeStyle: CSSProperties | undefined =
     typeof size === 'number' ? { fontSize: `${size}px` } : undefined;
@@ -31,7 +33,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(function Spinner
       )}
       style={{ ...sizeStyle, ...style }}
       role="status"
-      aria-label={label ?? 'Loading'}
+      aria-label={label ?? t.loading}
       {...rest}
     >
       <span className="sy-spinner__circle" aria-hidden="true" />

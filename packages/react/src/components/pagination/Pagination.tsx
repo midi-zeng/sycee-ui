@@ -1,6 +1,7 @@
 import { forwardRef, useState } from 'react';
 import type { HTMLAttributes } from 'react';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import { Icon } from '../icon/Icon';
 
 type PageItem = number | 'ellipsis';
@@ -61,6 +62,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(function P
   },
   ref,
 ) {
+  const t = useLocale();
   const [innerPage, setInnerPage] = useState(page ?? 1);
   const pageCount = Math.max(1, Math.ceil(total / pageSize));
   const currentPage = Math.min(Math.max(page ?? innerPage, 1), pageCount);
@@ -79,11 +81,11 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(function P
       className={cx('sy-pagination', disabled && 'is-disabled', className)}
       {...rest}
     >
-      <nav className="sy-pagination__nav" aria-label="Pagination">
+      <nav className="sy-pagination__nav" aria-label={t.pagination}>
         <button
           type="button"
           className="sy-pagination__item sy-pagination__item--arrow"
-          aria-label="Previous page"
+          aria-label={t.previousPage}
           disabled={disabled || currentPage <= 1}
           onClick={() => goTo(currentPage - 1)}
         >
@@ -110,7 +112,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(function P
         <button
           type="button"
           className="sy-pagination__item sy-pagination__item--arrow"
-          aria-label="Next page"
+          aria-label={t.nextPage}
           disabled={disabled || currentPage >= pageCount}
           onClick={() => goTo(currentPage + 1)}
         >

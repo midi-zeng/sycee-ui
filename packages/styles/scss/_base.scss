@@ -9,6 +9,13 @@
   box-sizing: border-box;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  [class^='sy-'],
+  [class*=' sy-'] {
+    scroll-behavior: auto !important;
+  }
+}
+
 // Buttons rendered by Sycee inherit the surrounding font by default.
 .sy-button,
 .sy-switch,
@@ -44,4 +51,15 @@
   margin: 0;
   opacity: 0;
   cursor: inherit;
+}
+
+// Modern, consistent focus treatment for native interactive elements used
+// inside composite components.
+.sy-button:focus-visible,
+.sy-input:focus-within,
+.sy-select.is-focused,
+.sy-tabs__tab:focus-visible,
+.sy-pagination__item:focus-visible {
+  outline: none;
+  box-shadow: var(--sy-focus-ring);
 }

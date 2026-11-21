@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import Icon from '../icon/Icon.vue';
 
 defineOptions({ name: 'SyPagination' });
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const { total, pageSize = 10, siblingCount = 1, disabled = false } = defineProps<Props>();
+const t = useLocale();
 
 const emit = defineEmits<{ change: [page: number] }>();
 
@@ -71,11 +73,11 @@ function goTo(next: number) {
 
 <template>
   <div :class="cx('sy-pagination', disabled && 'is-disabled', $attrs.class as string)">
-    <nav class="sy-pagination__nav" aria-label="Pagination">
+    <nav class="sy-pagination__nav" :aria-label="t.pagination">
       <button
         type="button"
         class="sy-pagination__item sy-pagination__item--arrow"
-        aria-label="Previous page"
+        :aria-label="t.previousPage"
         :disabled="disabled || currentPage <= 1"
         @click="goTo(currentPage - 1)"
       >
@@ -100,7 +102,7 @@ function goTo(next: number) {
       <button
         type="button"
         class="sy-pagination__item sy-pagination__item--arrow"
-        aria-label="Next page"
+        :aria-label="t.nextPage"
         :disabled="disabled || currentPage >= pageCount"
         @click="goTo(currentPage + 1)"
       >

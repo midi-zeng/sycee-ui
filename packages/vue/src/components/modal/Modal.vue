@@ -1,34 +1,8 @@
-<script lang="ts">
-// Module-level state shared by every Modal instance so nested dialogs behave
-// correctly: one body scroll lock no matter how many are stacked, and a stack
-// of open dialogs so Escape only closes the topmost one.
-let scrollLockCount = 0;
-let scrollLockPreviousOverflow = '';
-
-let modalSeed = 0;
-let modalStack: number[] = [];
-
-function lockBodyScroll() {
-  if (typeof document === 'undefined') return;
-  if (scrollLockCount === 0) {
-    scrollLockPreviousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-  }
-  scrollLockCount += 1;
-}
-
-function unlockBodyScroll() {
-  if (typeof document === 'undefined') return;
-  scrollLockCount = Math.max(0, scrollLockCount - 1);
-  if (scrollLockCount === 0) {
-    document.body.style.overflow = scrollLockPreviousOverflow;
-  }
-}
-</script>
-
 <script setup lang="ts">
 import { computed, nextTick, ref, useAttrs, useId, watch } from 'vue';
 import { cx } from '../../utils/cx';
+import { isTopOverlay, registerOverlay } from '../../utils/overlays';
+import { useLocale } from '../../locale';
 import Button from '../button/Button.vue';
 import Icon from '../icon/Icon.vue';
 
@@ -39,9 +13,9 @@ interface Props {
   title?: string;
   /** Width of the dialog panel; numbers become px. @default 460 */
   width?: number | string;
-  /** Text of the confirm button. @default 'OK' */
+  /** Text of the confirm button. Defaults to the active locale. */
   okText?: string;
-  /** Text of the cancel button. @default 'Cancel' */
+  /** Text of the cancel button. Defaults to the active locale. */
   cancelText?: string;
   /** Renders the default footer with OK/Cancel buttons. @default true */
   showFooter?: boolean;
@@ -54,12 +28,13 @@ interface Props {
 const {
   title,
   width = 460,
-  okText = 'OK',
-  cancelText = 'Cancel',
+  okText,
+  cancelText,
   showFooter = true,
   maskClosable = true,
   closeOnEsc = true,
 } = defineProps<Props>();
+const t = useLocale();
 
 const emit = defineEmits<{
   ok: [];
@@ -127,7 +102,7 @@ function onDocumentKeyDown(event: KeyboardEvent) {
   if (event.key === 'Escape') {
     if (!closeOnEsc) return;
     // Only the topmost dialog responds to Escape.
-    if (modalStack[modalStack.length - 1] !== modalId) return;
+    if (!isTopOverlay(modalId)) return;
     event.stopPropagation();
     initiateClose();
     return;
@@ -155,15 +130,13 @@ watch(
   visible,
   (nowVisible, _previous, onCleanup) => {
     if (!nowVisible || typeof document === 'undefined') return;
-    modalId = (modalSeed += 1);
-    modalStack.push(modalId);
+    const registration = registerOverlay();
+    modalId = registration.id;
     restoreFocus = (document.activeElement as HTMLElement) ?? null;
-    lockBodyScroll();
     emit('open');
     nextTick(() => panelRef.value?.focus());
     onCleanup(() => {
-      modalStack = modalStack.filter((entry) => entry !== modalId);
-      unlockBodyScroll();
+      registration.release();
       const previous = restoreFocus;
       restoreFocus = null;
       previous?.focus();
@@ -210,7 +183,7 @@ watch(
             <button
               type="button"
               class="sy-modal__close"
-              aria-label="Close"
+              :aria-label="t.close"
               @click="handleCloseButton"
             >
               <Icon name="close" />
@@ -221,8 +194,8 @@ watch(
           </div>
           <div v-if="showFooter" class="sy-modal__footer">
             <slot name="footer">
-              <Button variant="ghost" @click="handleCancel">{{ cancelText }}</Button>
-              <Button variant="solid" @click="handleOk">{{ okText }}</Button>
+              <Button variant="ghost" @click="handleCancel">{{ cancelText ?? t.cancel }}</Button>
+              <Button variant="solid" @click="handleOk">{{ okText ?? t.ok }}</Button>
             </slot>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import type { HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { cx } from '../../utils/cx';
+import { useLocale } from '../../locale';
 import type { ColorType } from '../../types';
 import { Icon } from '../icon/Icon';
 
@@ -37,6 +38,7 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(function Tag(
   },
   ref,
 ) {
+  const t = useLocale();
   const handleClose = (event: MouseEvent<HTMLButtonElement>) => {
     if (disabled) return;
     onClose?.(event);
@@ -62,7 +64,7 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(function Tag(
         <button
           type="button"
           className="sy-tag__close"
-          aria-label="Remove"
+          aria-label={t.remove}
           disabled={disabled}
           onClick={handleClose}
         >

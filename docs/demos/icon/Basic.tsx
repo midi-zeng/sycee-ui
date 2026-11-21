@@ -15,6 +15,7 @@ const NAMES: IconName[] = [
   'search',
   'eye',
   'eye-off',
+  'copy',
 ];
 
 export default function Basic() {

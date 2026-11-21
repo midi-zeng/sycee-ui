@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
+import { fileURLToPath } from 'node:url';
 
 // Library build. Vite 8 runs on Rolldown, which is powered by the Oxc
 // (Rust) toolchain for parsing and transforming TypeScript/JSX.
@@ -24,10 +25,13 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2020',
     rollupOptions: {
-      external: [/^react(\/.*)?$/, /^react-dom(\/.*)?$/, /^scheduler(\/.*)?$/, /^ninepatch-core$/],
+      external: [/^react(\/.*)?$/, /^react-dom(\/.*)?$/, /^scheduler(\/.*)?$/, /^ninepatch-core$/, /^@sycee-ui\/utils$/],
     },
   },
   test: {
+    alias: {
+      '@sycee-ui/utils': fileURLToPath(new URL('../utils/src/index.ts', import.meta.url)),
+    },
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/test-setup.ts',

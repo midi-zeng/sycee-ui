@@ -1,0 +1,169 @@
+@use '../mixins' as m;
+
+// ---------------------------------------------------------------------------
+// DatePicker
+// ---------------------------------------------------------------------------
+
+.sy-date-picker {
+  @include m.sy-field-base;
+
+  cursor: pointer;
+
+  &__value {
+    @include m.sy-ellipsis;
+
+    flex: 1;
+    min-width: 0;
+    cursor: inherit;
+  }
+
+  &__placeholder {
+    color: var(--sy-color-text-disabled);
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: var(--sy-color-text-tertiary);
+    cursor: inherit;
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    background-color: var(--sy-color-bg-tertiary);
+
+    .sy-date-picker__value,
+    .sy-date-picker__icon {
+      cursor: not-allowed;
+    }
+  }
+
+  &--error,
+  &.is-error {
+    border-color: var(--sy-color-danger);
+
+    &:focus-within {
+      border-color: var(--sy-color-danger);
+      box-shadow: var(--sy-focus-ring-danger);
+    }
+  }
+
+  &--warning {
+    border-color: var(--sy-color-warning);
+  }
+
+  &--sm {
+    height: var(--sy-height-sm);
+  }
+
+  &--lg {
+    height: var(--sy-height-lg);
+  }
+}
+
+.sy-date-picker__panel {
+  position: fixed;
+  z-index: var(--sy-z-dropdown);
+  padding: var(--sy-space-3);
+  border: 1px solid var(--sy-color-border);
+  border-radius: var(--sy-radius-md);
+  background-color: var(--sy-color-bg);
+  box-shadow: var(--sy-shadow-md);
+  animation: sy-date-picker-in var(--sy-duration-fast) var(--sy-ease);
+  user-select: none;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sy-space-2);
+    margin-bottom: var(--sy-space-2);
+  }
+
+  &-title {
+    font-weight: var(--sy-font-weight-medium);
+    color: var(--sy-color-text);
+    font-size: var(--sy-font-size-sm);
+  }
+
+  &-nav {
+    @include m.sy-control-base;
+
+    width: 28px;
+    height: 28px;
+    border-radius: var(--sy-radius-sm);
+    color: var(--sy-color-text-tertiary);
+
+    &:hover {
+      background-color: var(--sy-color-bg-tertiary);
+      color: var(--sy-color-text);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+  }
+
+  &-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+    margin-bottom: 2px;
+  }
+
+  &-weekday {
+    font-size: 11px;
+    color: var(--sy-color-text-tertiary);
+    text-align: center;
+    line-height: 24px;
+  }
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+  }
+
+  &-day {
+    @include m.sy-control-base;
+
+    height: 28px;
+    width: 28px;
+    justify-content: center;
+    margin: 2px auto;
+    border-radius: var(--sy-radius-sm);
+    font-size: var(--sy-font-size-sm);
+    color: var(--sy-color-text);
+
+    &:hover {
+      background-color: var(--sy-color-bg-tertiary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--sy-focus-ring);
+    }
+
+    &.is-outside {
+      color: var(--sy-color-text-disabled);
+    }
+
+    &.is-today {
+      box-shadow: 0 0 0 1px var(--sy-color-border-strong) inset;
+    }
+
+    &.is-selected {
+      background-color: var(--sy-color-primary);
+      color: var(--sy-color-text-inverse);
+
+      &:hover {
+        background-color: var(--sy-color-primary-hover);
+      }
+    }
+  }
+}
+
+@keyframes sy-date-picker-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
